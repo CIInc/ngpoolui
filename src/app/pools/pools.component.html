@@ -1,0 +1,35 @@
+<mat-toolbar>Pools</mat-toolbar>
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+<div class="example-container mat-elevation-z8">
+  <!--<mat-card>-->
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="api_url">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.api_url}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+  <!--</mat-card>-->
+</div>

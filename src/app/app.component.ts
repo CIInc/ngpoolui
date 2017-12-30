@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  // Side menu options
+  modeIndex = 2;
+  get mode() { return ['side', 'over', 'push'][this.modeIndex]; }
 }
