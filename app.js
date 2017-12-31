@@ -27,16 +27,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
+app.use('/', routes_index);
 app.use('/api', routes_api);
 //app.use('/home', routes_index);
-app.use('*', routes_index);
-
-/*
+//app.use('*', routes_index);
 app.get('*', (req, res) => {
-  res.sendFile('../index.html', {'./'});
+  res.sendFile('./src/dist/index.html');//, {'./'}
 });
-app.listen(port, () => console.log(`API running on localhost:${port}`));
-*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
