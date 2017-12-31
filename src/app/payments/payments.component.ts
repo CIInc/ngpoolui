@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 
-import { PoolApiService } from '../pool-api.service';
+import { PoolApiService } from '../services/pool-api.service';
 import { Pools } from '../models/pools';
 
 @Component({

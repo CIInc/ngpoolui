@@ -8,7 +8,7 @@ import { PaymentsComponent } from './payments/payments.component';
 import { PoolsComponent } from './pools/pools.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'blocks', component: BlocksComponent },

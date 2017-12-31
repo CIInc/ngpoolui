@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
-import { Pool } from './models/pool';
-import { Pools } from './models/pools';
+import { Pool } from '../models/pool';
+import { Pools } from '../models/pools';
 
 @Injectable()
 export class PoolApiService {

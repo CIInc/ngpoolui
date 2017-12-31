@@ -2,8 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar, MatDialog } from '@angular/material';
 
-import { PoolApiService } from '../pool-api.service';
-import { PoolStoreService } from '../pool-store.service';
+import { PoolApiService } from '../services/pool-api.service';
+import { PoolStoreService } from '../services/pool-store.service';
 import { Pool } from '../models/pool';
 import { Pools } from '../models/pools';
 
