@@ -5,8 +5,8 @@ const favicon = require('serve-favicon');
 //var logger = require('morgan');
 //var cookieParser = require('cookie-parser');
 
-const routes_index = require('./routes/index');
-const routes_api = require('./routes/api');
+const routes_index = require('./src/server/routes/index');
+const routes_api = require('./src/server/routes/api');
 
 //const port = process.env.PORT || '3000';
 const app = express();
