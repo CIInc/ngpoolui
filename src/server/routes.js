@@ -3,7 +3,7 @@ const router = express.Router();
 const poolService = require('./pool.service'); 
 
 router.get('/heroes', (req, res) => {
- res.send(200, [
+ res.status(200).send([
     {"id": 10, "name": "Starlord", "saying": "oh yeah"}
  ])
 })

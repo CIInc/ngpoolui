@@ -2,10 +2,13 @@
   "name": "ngpoolui",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">7.0.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod --aot",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
