@@ -11,8 +11,9 @@ const env = require('./env/environment');
 const mongoUri = `mongodb://${env.accountName}:${env.key}@${env.accountName}.documents.azure.com:${env.port}/${env.databaseName}?ssl=true`;
 
 function connect() {
-mongoose.set('debug', true);
-return mongoose.connect(mongoUri, { useMongoClient: true });
+    mongoose.set('debug', true);
+    //return mongoose.connect(mongoUri, { useMongoClient: true });
+    return mongoose.connect(mongoUri);
 }
 
 module.exports = {
