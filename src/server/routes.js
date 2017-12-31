@@ -17,4 +17,8 @@ router.get('/pools', (req, res) => {
 router.post('/pool', (req, res) => {
     poolService.postPool(req, res);
 });
+
+router.get('*', function(req, res, next) {
+    res.sendFile('./dist/index.html', {root});
+  });
 module.exports=router;
