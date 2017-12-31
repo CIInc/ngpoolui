@@ -28,9 +28,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 Add Azure's SCM integration into the repository by running `git remote add azure https://CIAymeric@xmrpool.scm.azurewebsites.net/XMRPool.git`
 
 ### Deploy to Azure
--Run `ng build  --prod --aot` to package the Angular app into 'dist' folder. 
--Copy 'dist' folder into ftp://waws-prod-dm1-027.ftp.azurewebsites.windows.net/site/wwwroot/
--Run `git push azure master --force` to deploy node and express to Azure.
+Run `ng build  --prod --aot` to package the Angular app into 'dist' folder. 
+
+Copy 'dist' folder into ftp://waws-prod-dm1-027.ftp.azurewebsites.windows.net/site/wwwroot/
+
+Run `git push azure master --force` to package Express node app, generate web.config, integrate iisnode and deploy to Azure.
 
 ## Further help
 
