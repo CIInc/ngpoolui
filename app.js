@@ -11,8 +11,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(express.static(path.join(root, 'dist')));
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/', routes);
 app.use('/api', routes);
-//app.use('/', routes);
+app.use('*', routes);
 /*
 app.get('*', (req, res) => {
   res.sendFile('../index.html', {root});

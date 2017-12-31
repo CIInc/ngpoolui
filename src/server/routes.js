@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const poolService = require('./pool.service'); 
 
-/*
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.sendFile('./dist/index.html', {root});
   });
-  */
+
 router.get('/heroes', (req, res) => {
  res.status(200).send([
     {"id": 10, "name": "Starlord", "saying": "oh yeah"}
