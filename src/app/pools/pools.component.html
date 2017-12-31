@@ -1,46 +1,4 @@
 <mat-toolbar>Pools</mat-toolbar>
-<mat-card>
-  <mat-card-content>
-    <h3>Register New Pool</h3>
-    <mat-form-field>
-      <input matInput #inputName required placeholder="Name (e.g. XMRPool.net)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput #inputWebUrl required placeholder="Web Site URL (e.g. https://xmrpool.net)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput #inputApiUrl required placeholder="API URL (e.g. https://api.xmrpool.net)">
-    </mat-form-field>
-    <button mat-button (click)="add(inputName.value, inputWebUrl.value, inputApiUrl.value);">
-        <mat-icon>add</mat-icon>        
-      Register
-    </button>
-    <!--
-    <mat-form-field>
-      <textarea matInput placeholder="Textarea"></textarea>
-    </mat-form-field>
-  
-    <mat-form-field>
-      <mat-select placeholder="Select">
-        <mat-option value="option">Option</mat-option>
-      </mat-select>
-    </mat-form-field>
-  -->
-  </mat-card-content>
-</mat-card>
-<br/>
-<mat-card>
-  <mat-card-content>
-    <h3>Search All Pools</h3>
-    <mat-form-field>
-      <input matInput #paymentAddress placeholder="Payment Address">
-    </mat-form-field>
-    <button mat-button (click)="search(paymentAddress.value)">
-      <mat-icon>search</mat-icon>
-      Search
-    </button>
-  </mat-card-content>
-</mat-card>
 <div class="example-header">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -104,3 +62,50 @@
   </mat-paginator>
   <!--</mat-card>-->
 </div>
+<br/>
+<mat-card>
+    <mat-card-content>
+      <h3>Register New Pool</h3>
+      <mat-form-field>
+        <input matInput #inputName placeholder="Name (e.g. XMRPool.net)" [formControl]="poolName" required>
+        <mat-error *ngIf="poolName.invalid">{{getErrorMessage()}}</mat-error>            
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #inputWebUrl placeholder="Web Site URL (e.g. https://xmrpool.net)" [formControl]="poolWebUrl">
+        <mat-error *ngIf="poolWebUrl.invalid">{{getErrorMessage()}}</mat-error>            
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput #inputApiUrl required placeholder="API URL (e.g. https://api.xmrpool.net)" [formControl]="poolApiUrl" required>
+        <mat-error *ngIf="poolApiUrl.invalid">{{getErrorMessage()}}</mat-error>            
+      </mat-form-field>
+      <button mat-button (click)="add(inputName.value, inputWebUrl.value, inputApiUrl.value);">
+          <mat-icon>add</mat-icon>        
+        Register
+      </button>
+      <!--
+      <mat-form-field>
+        <textarea matInput placeholder="Textarea"></textarea>
+      </mat-form-field>
+    
+      <mat-form-field>
+        <mat-select placeholder="Select">
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+    -->
+    </mat-card-content>
+  </mat-card>
+  <br/>
+  <mat-card>
+    <mat-card-content>
+      <h3>Search All Pools</h3>
+      <mat-form-field>
+        <input matInput #paymentAddress placeholder="Payment Address">
+      </mat-form-field>
+      <button mat-button (click)="search(paymentAddress.value)">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </mat-card-content>
+  </mat-card>
+  

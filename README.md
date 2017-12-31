@@ -34,6 +34,11 @@ Copy 'dist' folder into ftp://waws-prod-dm1-027.ftp.azurewebsites.windows.net/si
 
 Run `git push azure master --force` to package Express node app, generate web.config, integrate iisnode and deploy to Azure.
 
+## Monitor
+
+###Viewing Logs
+Run `az webapp log tail --resource-group XMRPool --name XMRPool` to view (or "tail") the logs from the running Website. Any calls to console.log() in the site will be displayed in your terminal.
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

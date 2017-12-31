@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar, MatDialog } from '@angular/material';
 
 import { PoolApiService } from '../pool-api.service';
@@ -23,12 +24,22 @@ export class PoolsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.pools);
   displayedColumns = ['name', 'hashRate', 'miners', 'totalHashes', 'lastBlockFoundTime', 'totalBlocksFound'];
 
+  poolName = new FormControl('', [Validators.required]);
+  poolWebUrl = new FormControl('');
+  poolApiUrl = new FormControl('', [Validators.required]);
+
   constructor(private poolApiService: PoolApiService, private poolStoreService: PoolStoreService, public snackBar: MatSnackBar) {
     this.poolStoreService.getPools().subscribe(pools => {
       this.pools = pools;
       this.updateStats();
+    }, error => {
+      if (error.status === 500) {
+      }
+      this.updateStats();
+      this.snackBar.open(error.message, null, {
+        duration: 2000,
+      });
     });
-    //this.updateStats();
   }
 
   ngOnInit() {
@@ -106,20 +117,39 @@ export class PoolsComponent implements OnInit {
       totalPayments: 0,
       roundHashes: 0
     };
-    this.poolStoreService.addPool(newpool).subscribe(result => {
-      this.snackBar.open('Pool added.', 'Ok', {
-        duration: 2000,
-      });
-      this.poolStoreService.getPools().subscribe(pools => {
-        this.pools = pools;
-        this.updateStats();
+    this.poolApiService.getStats(newpool).subscribe(checkresult => {
+      this.poolStoreService.addPool(newpool).subscribe(result => {
+        this.snackBar.open('Pool added.', 'Ok', {
+          duration: 2000,
+        });
+        this.clearRegistrationForm();
+        this.poolStoreService.getPools().subscribe(pools => {
+          this.pools = pools;
+          this.updateStats();
+        });
+      }, error => {
+        if (error.status === 500) {
+        }
+        this.snackBar.open(error.message, null, {
+          duration: 2000,
+        });
       });
     }, error => {
       if (error.status === 500) {
       }
-      this.snackBar.open(error.message, null, {
+      this.snackBar.open('Pool not added. ' + error.message, null, {
         duration: 2000,
       });
     });
+  }
+
+  getErrorMessage() {
+    return this.poolName.hasError('required') ? 'You must enter a value' :
+        // this.poolName.hasError('email') ? 'Not a valid email' :
+            '';
+  }
+
+  clearRegistrationForm() {
+    
   }
 }

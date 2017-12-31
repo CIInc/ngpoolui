@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Pool } from './models/pool';
 
-//const api = 'http://localhost:3000/api';
-const api = '/api';
+const api = 'http://localhost:3000/api';
+//const api = '/api';
 
 @Injectable()
 export class PoolStoreService {

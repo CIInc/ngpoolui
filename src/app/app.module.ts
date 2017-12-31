@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import {MediaMatcher} from '@angular/cdk/layout';
 
@@ -23,6 +24,7 @@ import {
   MatInputModule,
   MatSnackBarModule
 } from '@angular/material';
+
 import { PoolsComponent } from './pools/pools.component';
 import { PoolApiService } from './pool-api.service';
 import { PoolStoreService } from './pool-store.service';
@@ -45,6 +47,8 @@ import { PaymentsComponent } from './payments/payments.component';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatMenuModule,
     MatIconModule,
     MatSidenavModule,
