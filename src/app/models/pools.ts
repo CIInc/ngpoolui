@@ -22,18 +22,19 @@ export class Pools {
           lastBlockFoundTime: null
         },
         {
-          name: 'ViaXMR.com',
-          webUrl: 'https://viaxmr.com',
-          apiUrl: 'https://api.viaxmr.com',
+          name: 'Moria Mining Pool',
+          webUrl: 'https://moriaxmr.com',
+          apiUrl: 'https://api.moriaxmr.com',
           hashRate: 0,
           miners: 0,
           totalHashes: 0,
           lastBlockFoundTime: null
         },
+        /*
         {
-          name: 'Moria Mining Pool',
-          webUrl: 'https://moriaxmr.com',
-          apiUrl: 'https://api.moriaxmr.com',
+          name: 'ViaXMR.com',
+          webUrl: 'https://viaxmr.com',
+          apiUrl: 'https://api.viaxmr.com',
           hashRate: 0,
           miners: 0,
           totalHashes: 0,
@@ -48,6 +49,7 @@ export class Pools {
           totalHashes: 0,
           lastBlockFoundTime: null
         },
+        */
       ];
     }
 }
