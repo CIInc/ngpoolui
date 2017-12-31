@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const root = './';
+//const root = './';
 
 router.get('/', function(req, res, next) {
     res.sendFile('./dist/index.html', {root});
