@@ -5,7 +5,8 @@ const path = require('path');
 //var logger = require('morgan');
 //var cookieParser = require('cookie-parser');
 
-const routes = require('./src/server/routes');
+const routes_index = require('./src/server/routes/index');
+const routes_api = require('./src/server/routes/api');
 
 //const port = process.env.PORT || '3000';
 const app = express();
@@ -24,9 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/', routes);
-app.use('/api', routes);
-app.use('*', routes);
+app.use('/api', routes_api);
+app.use('*', routes_index);
 
 /*
 app.get('*', (req, res) => {

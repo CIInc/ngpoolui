@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const routes = require('./routes');
+const routes_index = require('./routes/index');
+const routes_api = require('./routes/api');
 
 const root = './';
 const port = process.env.PORT || '3000';
@@ -10,7 +11,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(root, 'dist')));
-app.use('/api', routes);
+app.use('/api', routes_api);
+app.use('*', routes_index);
 /*
 app.get('*', (req, res) => {
   res.sendFile('../index.html', {root});
