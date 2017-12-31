@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 import { AppComponent } from './app.component';
 
@@ -11,16 +13,19 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatCheckboxModule,
+  MatSelectModule,
   MatCardModule,
   MatListModule,
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { PoolsComponent } from './pools/pools.component';
 import { PoolApiService } from './pool-api.service';
+import { PoolStoreService } from './pool-store.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -37,6 +42,7 @@ import { PaymentsComponent } from './payments/payments.component';
     PaymentsComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatMenuModule,
@@ -45,6 +51,7 @@ import { PaymentsComponent } from './payments/payments.component';
     MatToolbarModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatSelectModule,
     MatCardModule,
     MatListModule,
     MatTableModule,
@@ -52,9 +59,10 @@ import { PaymentsComponent } from './payments/payments.component';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    AppRoutingModule
+    MatSnackBarModule,
+    HttpClientModule
   ],
-  providers: [PoolApiService],
+  providers: [PoolApiService, MediaMatcher, PoolStoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

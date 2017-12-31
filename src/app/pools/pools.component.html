@@ -1,4 +1,46 @@
 <mat-toolbar>Pools</mat-toolbar>
+<mat-card>
+  <mat-card-content>
+    <h3>Register New Pool</h3>
+    <mat-form-field>
+      <input matInput #inputName required placeholder="Name (e.g. XMRPool.net)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput #inputWebUrl required placeholder="Web Site URL (e.g. https://xmrpool.net)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput #inputApiUrl required placeholder="API URL (e.g. https://api.xmrpool.net)">
+    </mat-form-field>
+    <button mat-button (click)="add(inputName.value, inputWebUrl.value, inputApiUrl.value);">
+        <mat-icon>add</mat-icon>        
+      Register
+    </button>
+    <!--
+    <mat-form-field>
+      <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-select placeholder="Select">
+        <mat-option value="option">Option</mat-option>
+      </mat-select>
+    </mat-form-field>
+  -->
+  </mat-card-content>
+</mat-card>
+<br/>
+<mat-card>
+  <mat-card-content>
+    <h3>Search All Pools</h3>
+    <mat-form-field>
+      <input matInput #paymentAddress placeholder="Payment Address">
+    </mat-form-field>
+    <button mat-button (click)="search(paymentAddress.value)">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </mat-card-content>
+</mat-card>
 <div class="example-header">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -6,30 +48,59 @@
 </div>
 <div class="example-container mat-elevation-z8">
   <!--<mat-card>-->
-    <mat-table #table [dataSource]="dataSource" matSort>
+  <mat-table #table [dataSource]="dataSource" matSort>
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="api_url">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.api_url}} </mat-cell>
-      </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="apiUrl">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.apiUrl}} </mat-cell>
+    </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-    </mat-paginator>
+    <!-- hashRate Column -->
+    <ng-container matColumnDef="hashRate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Hash Rate </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.hashRate | number}} </mat-cell>
+    </ng-container>
+
+    <!-- miners Column -->
+    <ng-container matColumnDef="miners">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Miners </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.miners | number}} </mat-cell>
+    </ng-container>
+
+    <!-- miners Column -->
+    <ng-container matColumnDef="totalHashes">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Total Hashes </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.totalHashes | number}} </mat-cell>
+    </ng-container>
+
+    <!-- miners Column -->
+    <ng-container matColumnDef="lastBlockFoundTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Block Found Time </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastBlockFoundTime | date:'short'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalBlocksFound">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Total Blocks Found </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.totalBlocksFound | number}} </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
   <!--</mat-card>-->
 </div>

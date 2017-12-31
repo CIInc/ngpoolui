@@ -1,4 +1,65 @@
 <mat-toolbar>Blocks</mat-toolbar>
-<p>
-  blocks works!
-</p>
+<!--
+<div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+-->
+  <div class="example-container mat-elevation-z8">
+    <!--<mat-card>-->
+      <mat-table #table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="valid">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Valid </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.valid}} </mat-cell>
+        </ng-container>
+          
+        <ng-container matColumnDef="ts">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Time Found </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.ts | date:'short'}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="height">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Height </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.height | number}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="diff">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Difficulty </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.diff | number}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="hash">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Hash </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.hash}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="shares">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Shares </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.shares | number}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="luck">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Luck </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.shares | number}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="unlocked">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Maturity </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.unlocked}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="pool_type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Pool </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.pool_type}} </mat-cell>
+        </ng-container>
+        
+        
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
+    <!--</mat-card>-->
+  </div>

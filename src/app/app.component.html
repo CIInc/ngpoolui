@@ -1,8 +1,8 @@
-<div class="ngpoolui-sidenav-area">
+<div class="ngpoolui-sidenav-area" [class.example-is-mobile]="mobileQuery.matches">
   <mat-sidenav-container>
-    <mat-sidenav #start [mode]="mode" [fixedInViewport]="true">
+    <mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">
       <!-- (open)="myinput.focus()" -->
-      <mat-toolbar color="primary">
+      <mat-toolbar>
         <span>Cryptonote Pool UI</span>
       </mat-toolbar>
       <mat-menu #appMenu="matMenu">
@@ -42,10 +42,6 @@
           <mat-icon mat-list-icon>folder</mat-icon>
           <h4 mat-line>name</h4>
         </a>
-        <a mat-list-item>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <h4 mat-line>name</h4>
-        </a>
         <mat-divider></mat-divider>
         <h3 mat-subheader>Network</h3>
         <a mat-list-item routerLink="/pools" (click)="start.close(undefined, 'mouse')">
@@ -71,10 +67,10 @@
     </mat-sidenav>
   -->
     <mat-sidenav-content>
-      <mat-toolbar color="primary">
+      <mat-toolbar>
         <mat-toolbar-row>
-          <button mat-icon-button (click)="start.toggle(undefined, 'mouse')">
-            <mat-icon>menu</mat-icon>
+          <button mat-icon-button aria-label="Navigation menu" (click)="start.toggle()">
+            <mat-icon aria-hidden="true">menu</mat-icon>
           </button>
           <button mat-button routerLink="/home" (click)="start.close(undefined, 'mouse')">
             <mat-icon>home</mat-icon>
@@ -119,14 +115,14 @@
         <mat-toolbar-row class="mat-caption">
           <span>
             Powered by
-            <a class="alt" href="https://github.com/Aymeric/ngpoolui" target="_new">ngpoolui</a>
+            <a class="alt" href="https://github.com/CIInc/ngpoolui" target="_new">ngpoolui</a>
             Credits
             <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
             <a class="alt" href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a>
           </span>
           <span class="spacer"></span>
           <span class="mat-caption">
-            © Continuous Integration, Inc. 2017
+            © Continuous Integration, Inc. 2017 
           </span>
         </mat-toolbar-row>
       </mat-toolbar>
