@@ -32,7 +32,7 @@ app.use('/api', routes_api);
 //app.use('/home', routes_index);
 //app.use('*', routes_index);
 app.get('*', (req, res) => {
-  res.sendFile('./src/dist/index.html');//, {'./'}
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));//, {'./'}
 });
 
 // catch 404 and forward to error handler
