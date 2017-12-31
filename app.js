@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/', routes_index);
+//app.use('/', routes_index);
 app.use('/api', routes_api);
 //app.use('/home', routes_index);
 //app.use('*', routes_index);
