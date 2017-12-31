@@ -29,7 +29,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/', routes_index);
 app.use('/api', routes_api);
-app.use('/*', routes_index);
+app.use('/home', routes_index);
+app.use('*', routes_index);
 
 /*
 app.get('*', (req, res) => {
