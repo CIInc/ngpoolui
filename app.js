@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/', routes);
 app.use('/api', routes);
-//app.use('*', routes);
+app.use('*', routes);
 
 /*
 app.get('*', (req, res) => {
