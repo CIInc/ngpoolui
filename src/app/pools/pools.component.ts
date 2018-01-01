@@ -1,11 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar, MatDialog } from '@angular/material';
 
 import { PoolApiService } from '../services/pool-api.service';
 import { PoolStoreService } from '../services/pool-store.service';
+import { UserService } from '../services/user.service';
 import { Pool } from '../models/pool';
 import { Pools } from '../models/pools';
+import { PoolsAddDialogComponent } from './pools-add-dialog/pools-add-dialog.component';
 
 @Component({
   selector: 'app-pools',
@@ -17,18 +19,25 @@ export class PoolsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  pools = Pools.Default();
-
+  pools = []; // Pools.Default();
   searchResults: Pool[] = [];
 
   dataSource = new MatTableDataSource(this.pools);
-  displayedColumns = ['name', 'hashRate', 'miners', 'totalHashes', 'lastBlockFoundTime', 'totalBlocksFound'];
+  searchDataSource;
+
+  displayedColumns = ['selected', 'name', 'hashRate', 'miners', 'totalHashes', 'lastBlockFoundTime', 'totalBlocksFound'];
 
   poolName = new FormControl('', [Validators.required]);
   poolWebUrl = new FormControl('');
   poolApiUrl = new FormControl('', [Validators.required]);
 
-  constructor(private poolApiService: PoolApiService, private poolStoreService: PoolStoreService, public snackBar: MatSnackBar) {
+  constructor(
+    private poolApiService: PoolApiService,
+    private poolStoreService: PoolStoreService,
+    private userService: UserService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog
+  ) {
     this.poolStoreService.getPools().subscribe(pools => {
       this.pools = pools;
       this.updateStats();
@@ -93,16 +102,29 @@ export class PoolsComponent implements OnInit {
           pools.push(this.pools[index]);
         }
       });
-      this.dataSource = new MatTableDataSource(pools);
-      /*
-      this.snackBar.open('Search returned ' + pools.length + ' pools with this address', 'ok', {
+      this.searchDataSource = new MatTableDataSource(pools);
+      this.snackBar.open('Search returned ' + pools.length + ' pools with this address', 'Ok', {
         duration: 1000,
       });
-      */
     });
   }
 
-  add(name: string, webUrl: string, apiUrl: string) {
+
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(PoolsAddDialogComponent, {
+      width: '400px',
+      data: { name: '', webUrl: '', apiUrl: '' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //alert(JSON.stringify(result));
+      if (result != null) {
+        this.addPool(result.name, result.webUrl, result.apiUrl);
+      }
+    });
+  }
+
+  addPool(name: string, webUrl: string, apiUrl: string) {
     const newpool: Pool = {
       name: name,
       webUrl: webUrl,
@@ -122,7 +144,6 @@ export class PoolsComponent implements OnInit {
         this.snackBar.open('Pool added.', 'Ok', {
           duration: 2000,
         });
-        this.clearRegistrationForm();
         this.poolStoreService.getPools().subscribe(pools => {
           this.pools = pools;
           this.updateStats();
@@ -137,7 +158,7 @@ export class PoolsComponent implements OnInit {
     }, error => {
       if (error.status === 500) {
       }
-      this.snackBar.open('Pool not added. ' + error.message, null, {
+      this.snackBar.open('Pool not added. - ' + error.message, null, {
         duration: 2000,
       });
     });
@@ -149,7 +170,4 @@ export class PoolsComponent implements OnInit {
             '';
   }
 
-  clearRegistrationForm() {
-    
-  }
 }

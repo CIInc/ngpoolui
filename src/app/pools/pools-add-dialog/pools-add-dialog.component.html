@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Register New Pool</h1>
+<div mat-dialog-content class="dialog-container">
+  <!--
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <input matInput tabindex="1" [(ngModel)]="data.animal">
+  </mat-form-field>
+-->
+  <mat-form-field>
+      <input matInput #inputName [(ngModel)]="data.name" placeholder="Name (e.g. XMRPool.net)" [formControl]="poolName" required>
+      <mat-error *ngIf="poolName.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput #inputWebUrl [(ngModel)]="data.webUrl" placeholder="Web Site URL (e.g. https://xmrpool.net)" [formControl]="poolWebUrl">
+      <mat-error *ngIf="poolWebUrl.invalid">{{getErrorMessage()}}</mat-error>            
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput #inputApiUrl [(ngModel)]="data.apiUrl" required placeholder="API URL (e.g. https://api.xmrpool.net)" [formControl]="poolApiUrl" required>
+      <mat-error *ngIf="poolApiUrl.invalid">{{getErrorMessage()}}</mat-error>            
+    </mat-form-field>
+    <!--
+    <mat-form-field>
+      <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-select placeholder="Select">
+        <mat-option value="option">Option</mat-option>
+      </mat-select>
+    </mat-form-field>
+  -->
+
+</div>
+<div mat-dialog-actions>
+  <span class="spacer"></span>
+  <!--
+  <button mat-button>
+      <mat-icon>cancel</mat-icon>        
+      Cancel
+  </button>
+-->
+  <button mat-button cdkFocusInitial [mat-dialog-close]="data" cdkFocusInitial>
+    <!--<mat-icon>add</mat-icon>-->     
+    Register
+  </button>
+</div>

@@ -27,7 +27,7 @@
   
         <ng-container matColumnDef="diff">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Difficulty </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.diff | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.diff | difficultyToHashRate | abbreviatedNumber }}H/s </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="hash">
@@ -37,12 +37,12 @@
   
         <ng-container matColumnDef="shares">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Shares </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.shares | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.shares | abbreviatedNumber}} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="luck">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Luck </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.shares | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.shares | abbreviatedNumber}} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="unlocked">

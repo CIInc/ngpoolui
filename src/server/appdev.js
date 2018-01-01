@@ -12,7 +12,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(root, 'dist')));
 app.use('/api', routes_api);
-app.use('*', routes_index);
+//app.use('*', routes_index);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));//, {'./'}
+});
 /*
 app.get('*', (req, res) => {
   res.sendFile('../index.html', {root});

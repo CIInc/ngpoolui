@@ -14,6 +14,10 @@ export class PoolApiService {
 
   constructor(private http: HttpClient) { }
 
+  getNetworkStats(pool: Pool): Observable<any> {
+    return this.http.get(pool.apiUrl + '/network/stats');
+  }
+
   getStats(pool: Pool): Observable<any> {
     return this.http.get(pool.apiUrl + '/pool/stats');
   }

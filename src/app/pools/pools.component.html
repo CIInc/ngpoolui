@@ -1,13 +1,23 @@
 <mat-toolbar>Pools</mat-toolbar>
-<div class="example-header">
+<button mat-fab class="add-button" (click)="openAddDialog()">
+  <mat-icon>add</mat-icon>
+</button>
+<div class="pools-header">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
-<div class="example-container mat-elevation-z8">
-  <!--<mat-card>-->
+<div class="pools-container mat-elevation-z8">
+  <!--[{{userService.selectedPool.apiUrl}}]-->
   <mat-table #table [dataSource]="dataSource" matSort>
 
+    <ng-container matColumnDef="selected">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+          <mat-radio-button value="element.apiUrl" (change)="userService.selectedPool = element" [checked]="userService.selectedPool.apiUrl == element.apiUrl"></mat-radio-button>
+      </mat-cell>
+    </ng-container>
+    
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
@@ -28,7 +38,7 @@
     <!-- hashRate Column -->
     <ng-container matColumnDef="hashRate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Hash Rate </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.hashRate | number}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.hashRate | abbreviatedNumber}}H/s </mat-cell>
     </ng-container>
 
     <!-- miners Column -->
@@ -40,7 +50,7 @@
     <!-- miners Column -->
     <ng-container matColumnDef="totalHashes">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Total Hashes </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.totalHashes | number}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.totalHashes | abbreviatedNumber}} </mat-cell>
     </ng-container>
 
     <!-- miners Column -->
@@ -62,6 +72,7 @@
   </mat-paginator>
   <!--</mat-card>-->
 </div>
+<!--
 <br/>
 <mat-card>
     <mat-card-content>
@@ -78,27 +89,17 @@
         <input matInput #inputApiUrl required placeholder="API URL (e.g. https://api.xmrpool.net)" [formControl]="poolApiUrl" required>
         <mat-error *ngIf="poolApiUrl.invalid">{{getErrorMessage()}}</mat-error>            
       </mat-form-field>
-      <button mat-button (click)="add(inputName.value, inputWebUrl.value, inputApiUrl.value);">
+      <button mat-button (click)="addPool(inputName.value, inputWebUrl.value, inputApiUrl.value);">
           <mat-icon>add</mat-icon>        
         Register
       </button>
-      <!--
-      <mat-form-field>
-        <textarea matInput placeholder="Textarea"></textarea>
-      </mat-form-field>
-    
-      <mat-form-field>
-        <mat-select placeholder="Select">
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-      </mat-form-field>
-    -->
     </mat-card-content>
   </mat-card>
+-->
   <br/>
   <mat-card>
     <mat-card-content>
-      <h3>Search All Pools</h3>
+      <h3>Address Search</h3>
       <mat-form-field>
         <input matInput #paymentAddress placeholder="Payment Address">
       </mat-form-field>
@@ -106,6 +107,30 @@
         <mat-icon>search</mat-icon>
         Search
       </button>
+
+      <div class="pools-container">
+          <mat-table #searchTable [dataSource]="searchDataSource" matSort>
+        
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="webUrl">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Web </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.webUrl}} </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="apiUrl">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.apiUrl}} </mat-cell>
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="['name', 'webUrl', 'apiUrl']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['name', 'webUrl', 'apiUrl'];"></mat-row>
+          </mat-table>
+        </div>
+              
     </mat-card-content>
   </mat-card>
   

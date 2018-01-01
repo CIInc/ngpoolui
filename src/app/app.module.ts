@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import {MediaMatcher} from '@angular/cdk/layout';
-
-import { AppComponent } from './app.component';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
   MatMenuModule,
@@ -14,6 +13,7 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatCheckboxModule,
+  MatRadioModule,
   MatSelectModule,
   MatCardModule,
   MatListModule,
@@ -22,16 +22,22 @@ import {
   MatSortModule,
   MatFormFieldModule,
   MatInputModule,
+  MatDialogModule,
   MatSnackBarModule
 } from '@angular/material';
 
-import { PoolsComponent } from './pools/pools.component';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { PoolApiService } from './services/pool-api.service';
 import { PoolStoreService } from './services/pool-store.service';
-import { AppRoutingModule } from './app-routing.module';
+import { UserService } from './services/user.service';
 import { HomeComponent } from './home/home.component';
+import { PoolsComponent } from './pools/pools.component';
 import { BlocksComponent } from './blocks/blocks.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { DifficultyToHashRatePipe } from './pipes/difficultyToHashRate.pipe';
+import { AbbreviatedNumberPipe } from './pipes/abbreviatedNumber.pipe';
+import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,12 +45,20 @@ import { PaymentsComponent } from './payments/payments.component';
     PoolsComponent,
     HomeComponent,
     BlocksComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    DifficultyToHashRatePipe,
+    AbbreviatedNumberPipe,
+    PoolsAddDialogComponent
+  ],
+  entryComponents: [
+    PoolsAddDialogComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     MatMenuModule,
@@ -53,6 +67,7 @@ import { PaymentsComponent } from './payments/payments.component';
     MatToolbarModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatSelectModule,
     MatCardModule,
     MatListModule,
@@ -61,10 +76,10 @@ import { PaymentsComponent } from './payments/payments.component';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     MatSnackBarModule,
-    HttpClientModule
   ],
-  providers: [PoolApiService, MediaMatcher, PoolStoreService],
+  providers: [PoolApiService, MediaMatcher, PoolStoreService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
