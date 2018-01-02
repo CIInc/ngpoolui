@@ -1,0 +1,17 @@
+<mat-toolbar>
+  <button mat-button routerLink="">
+    <!--<mat-icon>pool</mat-icon>-->
+    <span *ngIf="pool">{{pool.name}}</span>
+  </button>
+  <button mat-button routerLink="blocks">
+    <mat-icon>widgets</mat-icon>
+    Blocks
+  </button>
+  <button mat-button routerLink="payments">
+    <mat-icon>payments</mat-icon>
+    Payments
+  </button>
+</mat-toolbar>
+
+<mat-card>
+</mat-card>

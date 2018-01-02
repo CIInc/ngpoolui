@@ -34,30 +34,35 @@ export class AppComponent {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
 
-    if (this.userService.selectedPool == null) {
+    if (this.userService.settings.selectedPoolApiUrl == null) {
       this.poolStoreService.getPools().subscribe(pools => {
-        this.userService.selectedPool = pools[0];
+        this.userService.settings.selectedPoolApiUrl = pools[0].apiUrl;
         this.getStats();
       });
     }
 
     // Create an observable that emits a value every 10 seconds
-    const myInterval = interval(10000);
+    const myInterval = interval(this.userService.settings.intervalTime);
     const subscribe = myInterval.subscribe(val => {
       this.getStats();
     });
   }
 
   getStats() {
-    if (this.userService.selectedPool == null) {
+    if (this.userService.settings.selectedPoolApiUrl == null) {
       return;
-    }    
-    this.poolApiService.getNetworkStats(this.userService.selectedPool).subscribe(results => {
-      this.userService.networkStats = results;
+    }
+    this.poolApiService.getNetworkStats(this.userService.settings.selectedPoolApiUrl).subscribe(results => {
+      this.userService.settings.networkStats = results;
     });
-    this.poolApiService.getStats(this.userService.selectedPool).subscribe(results => {
-      this.userService.poolStats = results.pool_statistics;
+    this.poolApiService.getPoolStats(this.userService.settings.selectedPoolApiUrl).subscribe(results => {
+      this.userService.settings.poolStats = results.pool_statistics;
     });
+    if (this.userService.settings.selectedAddress !== '') {
+      this.poolApiService.getMinerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
+        this.userService.settings.minerStats = results;
+      });
+    }
   }
 
   ngOnDestroy(): void {

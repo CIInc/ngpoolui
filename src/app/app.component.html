@@ -10,10 +10,11 @@
         <mat-icon>home</mat-icon>
         Home
       </button>
-      <button mat-button routerLink="/pools" fxShow [fxShow.xs]="false">
+      <button mat-button routerLink="/pools">
         <mat-icon>pools</mat-icon>
         Pools
       </button>
+      <!--
       <button mat-button routerLink="/blocks" fxShow [fxShow.xs]="false">
         <mat-icon>widgets</mat-icon>
         Blocks
@@ -22,23 +23,34 @@
         <mat-icon>payments</mat-icon>
         Payments
       </button>
+    -->
       <span class="spacer"></span>
-      <div *ngIf="userService.networkStats">
-          Network: <b>{{userService.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
+      <div *ngIf="userService.settings.networkStats" class="mat-caption">
+          Network: <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
+      </div>
+      &nbsp;
+      <div *ngIf="userService.settings.poolStats" class="mat-caption">
+          Pool: <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
+      </div>
+      &nbsp;
+      <div *ngIf="userService.settings.minerStats" class="mat-caption">
+          You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
       </div>
       <span class="spacer"></span>
-      <div *ngIf="userService.poolStats">
-          Pool: <b>{{userService.poolStats.hashRate | abbreviatedNumber }}H/s</b>
-      </div>
-      <span class="spacer"></span>
+      <button mat-icon-button routerLink="/settings" fxShow [fxShow.xs]="false">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <!--
       <button mat-icon-button [matMenuTriggerFor]="appMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #appMenu="matMenu">
-        <button mat-menu-item> Settings </button>
-        <button mat-menu-item> Help </button>
+        <button mat-menu-item routerLink="/settings"> Settings </button>
+        <button mat-menu-item routerLink="/help"> Help </button>
       </mat-menu>
+    -->
     </mat-toolbar-row>
+    <!--
     <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
         <button mat-button routerLink="/pools" (click)="snav.close(undefined, 'mouse')">
           <mat-icon>pools</mat-icon>
@@ -54,6 +66,7 @@
           Payments
         </button>        
     </mat-toolbar-row>
+    -->
   </mat-toolbar>
   <!--<mat-sidenav-container>-->
   <mat-sidenav-container class="ngpoolui-sidenav-container"
@@ -74,6 +87,7 @@
           <mat-icon mat-list-icon>home</mat-icon>
           <span mat-line>Home</span>
         </a>
+        <!--
         <a mat-list-item routerLink="/blocks">
           <mat-icon mat-list-icon>widgets</mat-icon>
           <span mat-line>Blocks</span>
@@ -82,6 +96,7 @@
           <mat-icon mat-list-icon>payments</mat-icon>
           <span mat-line>Payments</span>
         </a>
+      -->
         <mat-divider></mat-divider>
         <h3 mat-subheader>Profile</h3>
         <a mat-list-item>

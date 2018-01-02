@@ -10,45 +10,39 @@ import { Pools } from '../models/pools';
 @Injectable()
 export class PoolApiService {
 
-  pools = Pools.Default();
-
   constructor(private http: HttpClient) { }
 
-  getNetworkStats(pool: Pool): Observable<any> {
-    return this.http.get(pool.apiUrl + '/network/stats');
+  getNetworkStats(apiUrl: string): Observable<any> {
+    return this.http.get(apiUrl + '/network/stats');
   }
 
-  getStats(pool: Pool): Observable<any> {
-    return this.http.get(pool.apiUrl + '/pool/stats');
+  getPoolStats(apiUrl: string): Observable<any> {
+    return this.http.get(apiUrl + '/pool/stats');
   }
 
-  getBlocks(pool: Pool): Observable<any> {
-    return this.http.get(pool.apiUrl + '/pool/blocks');
+  getMinerStats(apiUrl: string, address: string): Observable<any> {
+    return this.http.get(apiUrl + '/miner/' + address + '/stats');
   }
 
-  getPayments(pool: Pool): Observable<any> {
-    return this.http.get(pool.apiUrl + '/pool/payments');
+  getBlocks(apiUrl: string): Observable<any> {
+    return this.http.get(apiUrl + '/pool/blocks');
   }
 
-  // Helper methods to iterate through all the pools.
+  getPayments(apiUrl: string): Observable<any> {
+    return this.http.get(apiUrl + '/pool/payments');
+  }
 
-  getPoolsStats(): Observable<Pool[]> {
-    const observableBatch = [];
-    this.pools.forEach(pool => {
-      observableBatch.push(
-        this.getStats(pool)
-      );
+  updateStat(pool: Pool) {
+    this.getPoolStats(pool.apiUrl).subscribe(result => {
+      pool.hashRate = result.pool_statistics.hashRate;
+      pool.miners = result.pool_statistics.miners;
+      pool.totalHashes = result.pool_statistics.totalHashes;
+      pool.lastBlockFoundTime = new Date(result.pool_statistics.lastBlockFoundTime * 1000);
+      pool.lastBlockFound = result.pool_statistics.lastBlockFound;
+      pool.totalBlocksFound = result.pool_statistics.totalBlocksFound;
+      pool.totalMinersPaid = result.pool_statistics.totalMinersPaid;
+      pool.totalPayments = result.pool_statistics.totalPayments;
+      pool.roundHashes = result.pool_statistics.roundHashes;
     });
-    return forkJoin(observableBatch);
-  }
-
-  searchPaymentAddress(paymentAddress: string): Observable<Pool[]> {
-    const observableBatch = [];
-    this.pools.forEach(pool => {
-      observableBatch.push(
-        this.http.get(pool.apiUrl + '/miner/' + paymentAddress + '/stats')
-      );
-    });
-    return forkJoin(observableBatch);
   }
 }

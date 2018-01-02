@@ -8,13 +8,12 @@
   </mat-form-field>
 </div>
 <div class="pools-container mat-elevation-z8">
-  <!--[{{userService.selectedPool.apiUrl}}]-->
   <mat-table #table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="selected">
       <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
       <mat-cell *matCellDef="let element">
-          <mat-radio-button value="element.apiUrl" (change)="userService.selectedPool = element" [checked]="userService.selectedPool.apiUrl == element.apiUrl"></mat-radio-button>
+          <mat-radio-button value="element.apiUrl" (change)="userService.settings.selectedPoolApiUrl = element.apiUrl" [checked]="userService.settings.selectedPoolApiUrl == element.apiUrl"></mat-radio-button>
       </mat-cell>
     </ng-container>
     
@@ -23,37 +22,31 @@
       <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
 
-    <!-- Weight Column -->
     <ng-container matColumnDef="apiUrl">
       <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.apiUrl}} </mat-cell>
     </ng-container>
 
-    <!-- hashRate Column -->
     <ng-container matColumnDef="hashRate">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Hash Rate </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.hashRate | abbreviatedNumber}}H/s </mat-cell>
     </ng-container>
 
-    <!-- miners Column -->
     <ng-container matColumnDef="miners">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Miners </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.miners | number}} </mat-cell>
     </ng-container>
 
-    <!-- miners Column -->
     <ng-container matColumnDef="totalHashes">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Total Hashes </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.totalHashes | abbreviatedNumber}} </mat-cell>
     </ng-container>
 
-    <!-- miners Column -->
     <ng-container matColumnDef="lastBlockFoundTime">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Last Block Found Time </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.lastBlockFoundTime | date:'short'}} </mat-cell>
@@ -64,9 +57,9 @@
       <mat-cell *matCellDef="let element"> {{element.totalBlocksFound | number}} </mat-cell>
     </ng-container>
 
-
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row 
+      *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row._id]"></mat-row>
   </mat-table>
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
   </mat-paginator>
@@ -103,11 +96,18 @@
       <mat-form-field>
         <input matInput #paymentAddress placeholder="Payment Address">
       </mat-form-field>
+
+    </mat-card-content>
+    <mat-card-actions>
+        <div fxFlex></div>
       <button mat-button (click)="search(paymentAddress.value)">
         <mat-icon>search</mat-icon>
         Search
       </button>
-
+    </mat-card-actions>
+        
+  </mat-card>
+  <mat-card *ngIf="searchDataSource != null">
       <div class="pools-container">
           <mat-table #searchTable [dataSource]="searchDataSource" matSort>
         
@@ -130,7 +130,4 @@
             <mat-row *matRowDef="let row; columns: ['name', 'webUrl', 'apiUrl'];"></mat-row>
           </mat-table>
         </div>
-              
-    </mat-card-content>
   </mat-card>
-  

@@ -1,4 +1,16 @@
-<mat-toolbar>Payments</mat-toolbar>
+<mat-toolbar>
+  <button mat-button routerLink="../">
+    <span *ngIf="pool">{{pool.name}}</span>
+  </button>
+  <button mat-button routerLink="../blocks">
+    <mat-icon>widgets</mat-icon>
+    Blocks
+  </button>
+  <button mat-button routerLink="../payments">
+    <mat-icon>payments</mat-icon>
+    Payments
+  </button>
+</mat-toolbar>  
 <!--
 <div class="example-header">
     <mat-form-field>

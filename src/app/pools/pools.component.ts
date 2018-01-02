@@ -1,6 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+//import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar, MatDialog } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+//import { of } from 'rxjs/observable/of';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import { PoolApiService } from '../services/pool-api.service';
 import { PoolStoreService } from '../services/pool-store.service';
@@ -19,7 +23,7 @@ export class PoolsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  pools = []; // Pools.Default();
+  pools: Pool[] = []; // Pools.Default();
   searchResults: Pool[] = [];
 
   dataSource = new MatTableDataSource(this.pools);
@@ -35,6 +39,7 @@ export class PoolsComponent implements OnInit {
     private poolApiService: PoolApiService,
     private poolStoreService: PoolStoreService,
     private userService: UserService,
+    //private router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {
@@ -59,22 +64,15 @@ export class PoolsComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.pools.forEach((pool, index) => {
-      this.updateStat(pool);
+      this.poolApiService.updateStat(pool);
     });
   }
-  updateStat(pool: Pool) {
-    this.poolApiService.getStats(pool).subscribe(result => {
-      pool.hashRate = result.pool_statistics.hashRate;
-      pool.miners = result.pool_statistics.miners;
-      pool.totalHashes = result.pool_statistics.totalHashes;
-      pool.lastBlockFoundTime = new Date(result.pool_statistics.lastBlockFoundTime * 1000);
-      pool.lastBlockFound = result.pool_statistics.lastBlockFound;
-      pool.totalBlocksFound = result.pool_statistics.totalBlocksFound;
-      pool.totalMinersPaid = result.pool_statistics.totalMinersPaid;
-      pool.totalPayments = result.pool_statistics.totalPayments;
-      pool.roundHashes = result.pool_statistics.roundHashes;
-    });
+
+  /*
+  navigate(to: string) {
+    this.router.navigate([to]);
   }
+  */
 
   /**
    * Set the sort after the view init since this component will
@@ -94,7 +92,7 @@ export class PoolsComponent implements OnInit {
   }
 
   search(searchValue: string) {
-    this.poolApiService.searchPaymentAddress(searchValue)
+    this.searchPaymentAddress(searchValue)
     .subscribe(results => {
       const pools = [];
       results.forEach((result, index) => {
@@ -109,6 +107,28 @@ export class PoolsComponent implements OnInit {
     });
   }
 
+
+  // Helper methods to iterate through all the pools.
+
+  getPoolsStats(): Observable<Pool[]> {
+    const observableBatch = [];
+    this.pools.forEach(pool => {
+      observableBatch.push(
+        this.poolApiService.getPoolStats(pool.apiUrl)
+      );
+    });
+    return forkJoin(observableBatch);
+  }
+
+  searchPaymentAddress(paymentAddress: string): Observable<Pool[]> {
+    const observableBatch = [];
+    this.pools.forEach(pool => {
+      observableBatch.push(
+        this.poolApiService.getMinerStats(pool.apiUrl, paymentAddress)
+      );
+    });
+    return forkJoin(observableBatch);
+  }
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(PoolsAddDialogComponent, {
@@ -139,7 +159,7 @@ export class PoolsComponent implements OnInit {
       totalPayments: 0,
       roundHashes: 0
     };
-    this.poolApiService.getStats(newpool).subscribe(checkresult => {
+    this.poolApiService.getPoolStats(newpool.apiUrl).subscribe(checkresult => {
       this.poolStoreService.addPool(newpool).subscribe(result => {
         this.snackBar.open('Pool added.', 'Ok', {
           duration: 2000,

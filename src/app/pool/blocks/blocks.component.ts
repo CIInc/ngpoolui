@@ -1,8 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 
-import { PoolApiService } from '../services/pool-api.service';
-import { Pools } from '../models/pools';
+import { PoolApiService } from '../../services/pool-api.service';
+import { PoolStoreService } from '../../services/pool-store.service';
+import { UserService } from '../../services/user.service';
+import { Pools } from '../../models/pools';
+import { Pool } from '../../models/pool';
 
 @Component({
   selector: 'app-blocks',
@@ -14,22 +19,39 @@ export class BlocksComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  pools = Pools.Default();
+  pool: Pool;
   blocks: any;
 
   dataSource = new MatTableDataSource(this.blocks);
   displayedColumns = ['valid', 'ts', 'height', 'diff', 'hash', 'shares', 'luck', 'unlocked', 'pool_type'];
 
-  constructor(private poolApiService: PoolApiService) {
-    this.poolApiService.getBlocks(this.pools[0]).subscribe(blks => {
+  constructor(
+    private poolApiService: PoolApiService,
+    private poolStoreService: PoolStoreService,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private location: Location,
+  ) {
+  }
+
+  ngOnInit() {
+    this.getPool();
+  }
+
+  getPool(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.poolStoreService.getPools().subscribe(pools => {
+      this.pool = pools.find(p => p['_id'] === id);
+      this.getBlocks();
+    });
+  }
+  getBlocks() {
+    this.poolApiService.getBlocks(this.pool.apiUrl).subscribe(blks => {
       this.blocks = blks;
       this.dataSource = new MatTableDataSource(this.blocks);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

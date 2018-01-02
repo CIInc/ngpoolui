@@ -33,11 +33,13 @@ import { PoolStoreService } from './services/pool-store.service';
 import { UserService } from './services/user.service';
 import { HomeComponent } from './home/home.component';
 import { PoolsComponent } from './pools/pools.component';
-import { BlocksComponent } from './blocks/blocks.component';
-import { PaymentsComponent } from './payments/payments.component';
+import { BlocksComponent } from './pool/blocks/blocks.component';
+import { PaymentsComponent } from './pool/payments/payments.component';
 import { DifficultyToHashRatePipe } from './pipes/difficultyToHashRate.pipe';
 import { AbbreviatedNumberPipe } from './pipes/abbreviatedNumber.pipe';
 import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dialog.component';
+import { SettingsComponent } from './settings/settings.component';
+import { PoolComponent } from './pool/pool.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dial
     PaymentsComponent,
     DifficultyToHashRatePipe,
     AbbreviatedNumberPipe,
-    PoolsAddDialogComponent
+    PoolsAddDialogComponent,
+    SettingsComponent,
+    PoolComponent
   ],
   entryComponents: [
     PoolsAddDialogComponent

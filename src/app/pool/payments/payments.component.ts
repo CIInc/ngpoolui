@@ -1,8 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 
-import { PoolApiService } from '../services/pool-api.service';
-import { Pools } from '../models/pools';
+import { PoolApiService } from '../../services/pool-api.service';
+import { PoolStoreService } from '../../services/pool-store.service';
+import { UserService } from '../../services/user.service';
+import { Pool } from '../../models/pool';
+import { Pools } from '../../models/pools';
 
 @Component({
   selector: 'app-payments',
@@ -14,22 +19,41 @@ export class PaymentsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  pools = Pools.Default();
+  pool: Pool;
+
   payments: any;
 
   dataSource = new MatTableDataSource(this.payments);
   displayedColumns = ['ts', 'hash', 'value', 'fee', 'mixins', 'payees'];
 
-  constructor(private poolApiService: PoolApiService) {
-    this.poolApiService.getPayments(this.pools[0]).subscribe(blks => {
+  constructor(
+    private poolApiService: PoolApiService,
+    private poolStoreService: PoolStoreService,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private location: Location,
+  ) {
+  }
+
+  ngOnInit() {
+    this.getPool();
+  }
+
+  getPool(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.poolStoreService.getPools().subscribe(pools => {
+      this.pool = pools.find(p => p['_id'] === id);
+      this.getPayments();
+    });
+  }
+
+  getPayments() {
+    this.poolApiService.getPayments(this.pool.apiUrl).subscribe(blks => {
       this.payments = blks;
       this.dataSource = new MatTableDataSource(this.payments);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**
