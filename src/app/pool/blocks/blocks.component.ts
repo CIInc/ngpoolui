@@ -23,7 +23,7 @@ export class BlocksComponent implements OnInit {
   blocks: any;
 
   dataSource = new MatTableDataSource(this.blocks);
-  displayedColumns = ['valid', 'ts', 'height', 'diff', 'hash', 'shares', 'luck', 'unlocked', 'pool_type'];
+  displayedColumns = ['valid', 'ts', 'height', 'diff', 'shares', 'luck', 'unlocked', 'pool_type'];//, 'hash'
 
   constructor(
     private poolApiService: PoolApiService,

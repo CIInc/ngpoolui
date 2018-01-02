@@ -1,4 +1,4 @@
-<div class="ngpoolui-container" [class.ngpoolui-is-mobile]="mobileQuery.matches">
+<div class="ngpoolui-container"><!--  [class.ngpoolui-is-mobile]="mobileQuery.matches" -->
   <mat-toolbar>
     <mat-toolbar-row>
       <!--
@@ -24,20 +24,20 @@
         Payments
       </button>
     -->
-      <span class="spacer"></span>
-      <div *ngIf="userService.settings.networkStats" class="mat-caption">
+      <div fxFlex></div>
+      <div *ngIf="userService.settings.networkStats" class="mat-caption" fxShow [fxShow.xs]="false">
           Network: <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
       </div>
       &nbsp;
-      <div *ngIf="userService.settings.poolStats" class="mat-caption">
+      <div *ngIf="userService.settings.poolStats" class="mat-caption" fxShow [fxShow.xs]="false">
           Pool: <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
       </div>
       &nbsp;
-      <div *ngIf="userService.settings.minerStats" class="mat-caption">
+      <div *ngIf="userService.settings.minerStats" class="mat-caption" fxShow [fxShow.xs]="false">
           You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
       </div>
-      <span class="spacer"></span>
-      <button mat-icon-button routerLink="/settings" fxShow [fxShow.xs]="false">
+      <div fxFlex></div>
+      <button mat-icon-button routerLink="/settings">
         <mat-icon>settings</mat-icon>
       </button>
       <!--
@@ -50,32 +50,27 @@
       </mat-menu>
     -->
     </mat-toolbar-row>
-    <!--
     <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
-        <button mat-button routerLink="/pools" (click)="snav.close(undefined, 'mouse')">
-          <mat-icon>pools</mat-icon>
-          Pools
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-button routerLink="/blocks" (click)="snav.close(undefined, 'mouse')">
-          <mat-icon>widgets</mat-icon>
-          Blocks
-        </button>
-        <button mat-button routerLink="/payments" (click)="snav.close(undefined, 'mouse')">
-          <mat-icon>payments</mat-icon>
-          Payments
-        </button>        
+      <div *ngIf="userService.settings.networkStats" class="mat-caption">
+          Network: <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
+      </div>
+      &nbsp;
+      <div *ngIf="userService.settings.poolStats" class="mat-caption">
+          Pool: <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
+      </div>
+      &nbsp;
+      <div *ngIf="userService.settings.minerStats" class="mat-caption">
+          You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
+      </div>
     </mat-toolbar-row>
-    -->
   </mat-toolbar>
-  <!--<mat-sidenav-container>-->
-  <mat-sidenav-container class="ngpoolui-sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  <mat-sidenav-container class="ngpoolui-sidenav-container">
+                         <!--[style.marginTop.px]="mobileQuery.matches ? 56 : 0">-->
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
     <!--<mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">-->
       <mat-toolbar>
-        <span>Cryptonote Pool UI</span>
+        <span>Monero Pool UI</span>
       </mat-toolbar>
       <!-- 
       <mat-nav-list>
@@ -87,42 +82,17 @@
           <mat-icon mat-list-icon>home</mat-icon>
           <span mat-line>Home</span>
         </a>
-        <!--
-        <a mat-list-item routerLink="/blocks">
-          <mat-icon mat-list-icon>widgets</mat-icon>
-          <span mat-line>Blocks</span>
-        </a>
-        <a mat-list-item routerLink="/payments">
-          <mat-icon mat-list-icon>payments</mat-icon>
-          <span mat-line>Payments</span>
-        </a>
-      -->
-        <mat-divider></mat-divider>
-        <h3 mat-subheader>Profile</h3>
-        <a mat-list-item>
-          <mat-icon mat-list-icon>money</mat-icon>
-          <h4 mat-line>Wallet</h4>
-        </a>
-        <a mat-list-item>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <h4 mat-line>name</h4>
-        </a>
-        <mat-divider></mat-divider>
-        <h3 mat-subheader>Pool</h3>
-        <a mat-list-item>
-          <mat-icon mat-list-icon>folder</mat-icon>
-          <h4 mat-line>name</h4>
-        </a>
         <mat-divider></mat-divider>
         <h3 mat-subheader>Network</h3>
         <a mat-list-item routerLink="/pools">
           <mat-icon mat-list-icon>pools</mat-icon>
           <span mat-line>Pools</span>
         </a>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader>Settings</h3>
         <a mat-list-item>
-          <mat-icon mat-list-icon>note</mat-icon>
-          <h4 mat-line>name</h4>
-          <!--<p mat-line> date </p>-->
+          <mat-icon mat-list-icon>settings</mat-icon>
+          <h4 mat-line>Settings</h4>
         </a>
       </mat-nav-list>
     </mat-sidenav>
@@ -138,10 +108,6 @@
       <div class="ngpoolui-sidenav-content">
         <!--<app-messages></app-messages>-->
         <router-outlet></router-outlet>
-          <!--
-        <app-pools></app-pools>
-          -->
-
       </div>
       <mat-toolbar>
         <mat-toolbar-row class="mat-caption">
@@ -152,9 +118,14 @@
             <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
             <a class="alt" href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a>
           </span>
-          <span class="spacer"></span>
-          <span class="mat-caption">
-            © Continuous Integration, Inc. 2017 
+          <div fxFlex></div>
+          <span fxShow [fxShow.xs]="false">
+              © Continuous Integration, Inc. 2017             
+          </span>
+        </mat-toolbar-row>
+        <mat-toolbar-row class="mat-caption" fxShow="false" [fxShow.xs]="true">
+          <span>
+              © Continuous Integration, Inc. 2017             
           </span>
         </mat-toolbar-row>
       </mat-toolbar>

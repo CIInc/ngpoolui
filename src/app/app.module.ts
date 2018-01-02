@@ -11,20 +11,25 @@ import {
   MatIconModule,
   MatSidenavModule,
   MatToolbarModule,
+  MatTabsModule,
   MatButtonModule,
   MatCheckboxModule,
   MatRadioModule,
   MatSelectModule,
   MatCardModule,
   MatListModule,
+  MatGridListModule,
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
   MatFormFieldModule,
   MatInputModule,
   MatDialogModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTooltipModule
 } from '@angular/material';
+
+import { MomentModule } from 'angular2-moment';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +42,7 @@ import { BlocksComponent } from './pool/blocks/blocks.component';
 import { PaymentsComponent } from './pool/payments/payments.component';
 import { DifficultyToHashRatePipe } from './pipes/difficultyToHashRate.pipe';
 import { AbbreviatedNumberPipe } from './pipes/abbreviatedNumber.pipe';
+import { ToXMRPipe } from './pipes/toXMR.pipe';
 import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PoolComponent } from './pool/pool.component';
@@ -50,6 +56,7 @@ import { PoolComponent } from './pool/pool.component';
     PaymentsComponent,
     DifficultyToHashRatePipe,
     AbbreviatedNumberPipe,
+    ToXMRPipe,
     PoolsAddDialogComponent,
     SettingsComponent,
     PoolComponent
@@ -69,12 +76,14 @@ import { PoolComponent } from './pool/pool.component';
     MatIconModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTabsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
     MatCardModule,
     MatListModule,
+    MatGridListModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -82,6 +91,8 @@ import { PoolComponent } from './pool/pool.component';
     MatInputModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatTooltipModule,
+    MomentModule
   ],
   providers: [PoolApiService, MediaMatcher, PoolStoreService, UserService],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+<!--
 <mat-toolbar>
   <button mat-button routerLink="../">
     <span *ngIf="pool">{{pool.name}}</span>
@@ -10,7 +11,8 @@
     <mat-icon>payments</mat-icon>
     Payments
   </button>
-</mat-toolbar>  
+</mat-toolbar>
+-->
 <!--
 <div class="example-header">
     <mat-form-field>
@@ -24,7 +26,11 @@
 
         <ng-container matColumnDef="ts">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Time Sent </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.ts | date:'short'}} </mat-cell>
+          <mat-cell *matCellDef="let element"> 
+            <span matTooltip="{{element.ts | date:'short' }}">
+              {{element.ts | amTimeAgo }}
+            </span>
+          </mat-cell>
         </ng-container>
           
         <ng-container matColumnDef="hash">
@@ -34,12 +40,12 @@
   
         <ng-container matColumnDef="value">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.value | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.value | toXMR | number}} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="fee">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Fee </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.fee | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.fee | toXMR | number}} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="mixins">

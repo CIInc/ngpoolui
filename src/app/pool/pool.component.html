@@ -1,6 +1,101 @@
+<!--
+<nav mat-tab-nav-bar>
+  <a mat-tab-link routerLink="" routerLinkActive active>
+    <span *ngIf="pool">{{pool.name}}</span>
+  </a>
+  <a mat-tab-link routerLink="blocks">
+     <mat-icon>widgets</mat-icon>
+     Blocks
+   </a>
+  <a mat-tab-link routerLink="payments">
+     <mat-icon>payments</mat-icon>
+     Payments
+   </a>
+</nav>
+
+<router-outlet></router-outlet>
+-->
+<mat-tab-group>
+  <mat-tab label="Stats">
+    <ng-template mat-tab-label>
+      <mat-icon>insert_chart</mat-icon>
+      <span *ngIf="pool">{{pool.name}}</span>
+    </ng-template>    
+    <mat-card>
+      <mat-grid-list cols="2" rowHeight="32px" *ngIf="pool">
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Pool types</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.poolList}}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Hash Rate</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.hashRate | abbreviatedNumber }}H/s</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Miners</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.miners | number }}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Total Hashes</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.totalHashes | abbreviatedNumber }}H</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Total Blocks Found</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.totalBlocksFound | number }}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Last Block Found Time</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span class="text-inside-grid" matTooltip="{{pool.lastBlockFoundTime | date:'short' }}">
+            <b>{{pool.lastBlockFoundTime | amTimeAgo }}</b>
+          </span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Total Payments</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.totalPayments | number }}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Total Miners Paid</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{pool.totalMinersPaid | number }}</b>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
+      
+  </mat-tab>
+  <mat-tab label="Blocks">
+    <ng-template mat-tab-label>
+      <mat-icon>widgets</mat-icon>
+      <span>Blocks</span>
+    </ng-template>
+    <app-blocks></app-blocks>
+  </mat-tab>
+  <mat-tab label="Payments">
+    <ng-template mat-tab-label>
+      <mat-icon>payments</mat-icon>
+      <span>Payments</span>
+    </ng-template>    
+    <app-payments></app-payments>
+  </mat-tab>
+</mat-tab-group>
+
+<!--
 <mat-toolbar>
   <button mat-button routerLink="">
-    <!--<mat-icon>pool</mat-icon>-->
     <span *ngIf="pool">{{pool.name}}</span>
   </button>
   <button mat-button routerLink="blocks">
@@ -12,6 +107,4 @@
     Payments
   </button>
 </mat-toolbar>
-
-<mat-card>
-</mat-card>
+-->

@@ -1,4 +1,5 @@
 <!--<mat-toolbar>Blocks</mat-toolbar>-->
+<!--
 <mat-toolbar>
   <button mat-button routerLink="../">
     <span *ngIf="pool">{{pool.name}}</span>
@@ -12,6 +13,7 @@
     Payments
   </button>
 </mat-toolbar>  
+-->
   <!--
 <div class="example-header">
     <mat-form-field>
@@ -25,17 +27,24 @@
 
         <ng-container matColumnDef="valid">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Valid </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.valid}} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-icon style="color: green" *ngIf="element.valid">check</mat-icon>
+              
+          </mat-cell>
         </ng-container>
           
         <ng-container matColumnDef="ts">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Time Found </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.ts | date:'short'}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Found </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span matTooltip="{{element.ts | date:'short' }}">
+              {{element.ts | date:'short' | amTimeAgo }}
+            </span>
+          </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="height">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Height </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.height | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.height | abbreviatedNumber}} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="diff">
@@ -60,7 +69,10 @@
   
         <ng-container matColumnDef="unlocked">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Maturity </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.unlocked}} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-icon *ngIf="element.unlocked">lock_open</mat-icon>
+            <mat-icon *ngIf="!element.unlocked">lock</mat-icon>
+          </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="pool_type">

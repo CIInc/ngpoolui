@@ -24,8 +24,7 @@ export class PaymentsComponent implements OnInit {
   payments: any;
 
   dataSource = new MatTableDataSource(this.payments);
-  displayedColumns = ['ts', 'hash', 'value', 'fee', 'mixins', 'payees'];
-
+  displayedColumns = ['ts', 'value', 'fee', 'mixins', 'payees'];//, 'hash'
   constructor(
     private poolApiService: PoolApiService,
     private poolStoreService: PoolStoreService,

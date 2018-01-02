@@ -10,13 +10,15 @@
 <div class="pools-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
 
+    <!--
     <ng-container matColumnDef="selected">
       <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
       <mat-cell *matCellDef="let element">
           <mat-radio-button value="element.apiUrl" (change)="userService.settings.selectedPoolApiUrl = element.apiUrl" [checked]="userService.settings.selectedPoolApiUrl == element.apiUrl"></mat-radio-button>
       </mat-cell>
     </ng-container>
-    
+  -->
+  
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
@@ -47,14 +49,18 @@
       <mat-cell *matCellDef="let element"> {{element.totalHashes | abbreviatedNumber}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="lastBlockFoundTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Block Found Time </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.lastBlockFoundTime | date:'short'}} </mat-cell>
+    <ng-container matColumnDef="totalBlocksFound">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Blocks Found </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.totalBlocksFound | number}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="totalBlocksFound">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Total Blocks Found </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.totalBlocksFound | number}} </mat-cell>
+    <ng-container matColumnDef="lastBlockFoundTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Found </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <span matTooltip="{{element.lastBlockFoundTime | date:'short' }}">
+          {{element.lastBlockFoundTime | amTimeAgo }}
+        </span>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

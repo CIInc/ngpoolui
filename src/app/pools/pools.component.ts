@@ -29,7 +29,7 @@ export class PoolsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.pools);
   searchDataSource;
 
-  displayedColumns = ['selected', 'name', 'hashRate', 'miners', 'totalHashes', 'lastBlockFoundTime', 'totalBlocksFound'];
+  displayedColumns = ['name', 'hashRate', 'miners', 'totalHashes', 'totalBlocksFound', 'lastBlockFoundTime'];
 
   poolName = new FormControl('', [Validators.required]);
   poolWebUrl = new FormControl('');

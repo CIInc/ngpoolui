@@ -34,6 +34,7 @@ export class PoolComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.poolStoreService.getPools().subscribe(pools => {
       this.pool = pools.find(p => p['_id'] === id);
+      this.poolApiService.updateStat(this.pool);
     });
   }
 }

@@ -43,6 +43,7 @@ export class PoolApiService {
       pool.totalMinersPaid = result.pool_statistics.totalMinersPaid;
       pool.totalPayments = result.pool_statistics.totalPayments;
       pool.roundHashes = result.pool_statistics.roundHashes;
+      pool.poolList = result.pool_list;
     });
   }
 }
