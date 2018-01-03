@@ -34,12 +34,20 @@ export class AppComponent {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
 
-    if (this.userService.settings.selectedPoolApiUrl == null) {
-      this.poolStoreService.getPools().subscribe(pools => {
+    this.poolStoreService.getPools().subscribe(pools => {
+      this.userService.setPools(pools);
+      this.userService.settings.pools.forEach((pool, index) => {
+        this.poolApiService.updateStat(pool);
+      });
+      if (this.userService.settings.selectedPoolApiUrl == null) {
         this.userService.settings.selectedPoolApiUrl = pools[0].apiUrl;
         this.getStats();
-      });
-    }
+      }
+    }, error => {
+      if (error.status === 500) {
+      }
+      console.warn(error.message);
+    });
 
     // Create an observable that emits a value every 10 seconds
     const myInterval = interval(this.userService.settings.intervalTime);
@@ -54,14 +62,24 @@ export class AppComponent {
     }
     this.poolApiService.getNetworkStats(this.userService.settings.selectedPoolApiUrl).subscribe(results => {
       this.userService.settings.networkStats = results;
+      this.userService.save();
     });
     this.poolApiService.getPoolStats(this.userService.settings.selectedPoolApiUrl).subscribe(results => {
       this.userService.settings.poolStats = results.pool_statistics;
+      this.userService.save();
     });
     if (this.userService.settings.selectedAddress !== '') {
       this.poolApiService.getMinerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
         this.userService.settings.minerStats = results;
+        this.userService.save();
       });
+      /*
+      this.poolApiService.getMinerWorkerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
+        this.userService.settings.minerWorkerStats = results;
+        this.userService.save();
+      });
+      */
+      
     }
   }
 

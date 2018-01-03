@@ -20,8 +20,20 @@ export class PoolApiService {
     return this.http.get(apiUrl + '/pool/stats');
   }
 
+  getPoolChartMiners(apiUrl: string): Observable<any> {
+    return this.http.get(apiUrl + '/pool/chart/miners');
+  }
+
+  getPoolChartHashRate(apiUrl: string): Observable<any> {
+    return this.http.get(apiUrl + '/pool/chart/hashrate');
+  }
+
   getMinerStats(apiUrl: string, address: string): Observable<any> {
     return this.http.get(apiUrl + '/miner/' + address + '/stats');
+  }
+
+  getMinerWorkerStats(apiUrl: string, address: string): Observable<any> {
+    return this.http.get(apiUrl + '/miner/' + address + '/stats/allWorkers');
   }
 
   getBlocks(apiUrl: string): Observable<any> {

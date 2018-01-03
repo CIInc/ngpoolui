@@ -40,12 +40,12 @@
   
         <ng-container matColumnDef="value">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.value | toXMR | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.value | toXMR | number}} XMR</mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="fee">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Fee </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.fee | toXMR | number}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.fee | toXMR | number}} XMR</mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="mixins">

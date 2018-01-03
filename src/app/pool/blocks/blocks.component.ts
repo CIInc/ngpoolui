@@ -32,20 +32,21 @@ export class BlocksComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
   ) {
+    this.getPool();
   }
 
   ngOnInit() {
-    this.getPool();
   }
 
   getPool(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.poolStoreService.getPools().subscribe(pools => {
-      this.pool = pools.find(p => p['_id'] === id);
-      this.getBlocks();
-    });
+    this.pool = this.userService.settings.pools.find(p => p['_id'] === id);
+    this.getBlocks();
   }
   getBlocks() {
+    if (this.pool === undefined) {
+      return;
+    }
     this.poolApiService.getBlocks(this.pool.apiUrl).subscribe(blks => {
       this.blocks = blks;
       this.dataSource = new MatTableDataSource(this.blocks);

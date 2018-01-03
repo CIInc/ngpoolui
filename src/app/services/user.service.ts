@@ -6,15 +6,28 @@ const localStorageKey = 'settings';
 @Injectable()
 export class UserService {
   settings = {
+    isDarkTheme: false,
     intervalTime: 10000,
     selectedPoolApiUrl: null,
     selectedAddress: '',
     networkStats: null,
     poolStats: null,
-    minerStats: null
-};
+    minerStats: null,
+    minerWorkerStats: null,
+    pools: []
+  };
+
+  valueChanged: (oldVal, newVal) => void;
+
   constructor() {
+    this.valueChanged = (() => {});
     this.load();
+  }
+
+  setPools(pools: Pool[]) {
+    this.valueChanged(this.settings.pools, pools);
+    this.settings.pools = pools;
+    this.save();
   }
 
   load() {

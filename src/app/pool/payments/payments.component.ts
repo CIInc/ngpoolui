@@ -40,10 +40,10 @@ export class PaymentsComponent implements OnInit {
 
   getPool(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.poolStoreService.getPools().subscribe(pools => {
-      this.pool = pools.find(p => p['_id'] === id);
+    this.pool = this.userService.settings.pools.find(p => p['_id'] === id);
+    if (this.pool != null) {
       this.getPayments();
-    });
+    }
   }
 
   getPayments() {

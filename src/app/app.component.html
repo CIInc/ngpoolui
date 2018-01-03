@@ -1,5 +1,5 @@
 <div class="ngpoolui-container"><!--  [class.ngpoolui-is-mobile]="mobileQuery.matches" -->
-  <mat-toolbar>
+  <mat-toolbar color="primary">
     <mat-toolbar-row>
       <!--
       <button mat-icon-button aria-label="Navigation menu" (click)="snav.toggle()" fxShow="false" [fxShow.xs]="true">
@@ -36,6 +36,14 @@
       <div *ngIf="userService.settings.minerStats" class="mat-caption" fxShow [fxShow.xs]="false">
           You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
       </div>
+      <!--
+      <span *ngIf="userService.settings.minerWorkerStats">
+        Workers: <b>{{(userService.settings.minerWorkerStats | keys).length-1}}</b>
+      &nbsp;Due: <b>{{userService.settings.minerStats.amtDue | toXMR | number:'1.0-4' }} XMR</b>
+      &nbsp;Paid: <b>{{userService.settings.minerStats.amtPaid | toXMR | number:'1.0-4' }} XMR</b>
+      </span>
+      -->
+
       <div fxFlex></div>
       <button mat-icon-button routerLink="/settings">
         <mat-icon>settings</mat-icon>
@@ -63,20 +71,24 @@
           You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
       </div>
     </mat-toolbar-row>
+    <!--
+    <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
+      <div *ngIf="userService.settings.minerWorkerStats" class="mat-caption">
+        Workers: <b>{{(userService.settings.minerWorkerStats | keys).length-1}}</b>
+      &nbsp;Due: <b>{{userService.settings.minerStats.amtDue | toXMR | number:'1.0-4' }} XMR</b>
+      &nbsp;Paid: <b>{{userService.settings.minerStats.amtPaid | toXMR | number:'1.0-4' }} XMR</b>      
+      </div>
+    </mat-toolbar-row>
+  -->
   </mat-toolbar>
   <mat-sidenav-container class="ngpoolui-sidenav-container">
                          <!--[style.marginTop.px]="mobileQuery.matches ? 56 : 0">-->
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
     <!--<mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">-->
-      <mat-toolbar>
+      <mat-toolbar color="primary">
         <span>Monero Pool UI</span>
       </mat-toolbar>
-      <!-- 
-      <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
-      </mat-nav-list>
-      -->
       <mat-nav-list>
         <a mat-list-item routerLink="/home">
           <mat-icon mat-list-icon>home</mat-icon>
@@ -96,14 +108,6 @@
         </a>
       </mat-nav-list>
     </mat-sidenav>
-    <!--
-    <mat-sidenav #end position="end"
-                 [fixedInViewport]="true" [fixedTopGap]="64" [fixedBottomGap]="64">
-      End Side Sidenav
-      <br>
-      <button mat-button (click)="end.close('mouse')">Close</button>
-    </mat-sidenav>
-  -->
     <mat-sidenav-content>
       <div class="ngpoolui-sidenav-content">
         <!--<app-messages></app-messages>-->
@@ -113,10 +117,10 @@
         <mat-toolbar-row class="mat-caption">
           <span>
             Powered by
-            <a class="alt" href="https://github.com/CIInc/ngpoolui" target="_new">ngpoolui</a>
+            <a href="https://github.com/CIInc/ngpoolui" target="_new">ngpoolui</a>
             Credits
-            <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
-            <a class="alt" href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a>
+            <a href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
+            <a href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a>
           </span>
           <div fxFlex></div>
           <span fxShow [fxShow.xs]="false">

@@ -15,12 +15,67 @@
 
 <router-outlet></router-outlet>
 -->
+<mat-toolbar color="primary">
+    <span *ngIf="pool">{{pool.name}}</span>
+</mat-toolbar>
 <mat-tab-group>
-  <mat-tab label="Stats">
+  <mat-tab label="My Info">
+    <ng-template mat-tab-label>
+      <mat-icon>person</mat-icon>
+      My Stats
+    </ng-template>
+    <mat-card>
+      <mat-grid-list cols="2" rowHeight="32px" *ngIf="pool">
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Amount Paid</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{userService.settings.minerStats.amtPaid | toXMR | number:'1.0-4' }} XMR</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Amount Due</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{userService.settings.minerStats.amtDue | toXMR | number:'1.0-4' }} XMR</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Total Hashes</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{userService.settings.minerStats.totalHashes | abbreviatedNumber }}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Valid Shares</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{userService.settings.minerStats.validShares | abbreviatedNumber }}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Hashes per Share</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{(userService.settings.minerStats.totalHashes/userService.settings.minerStats.validShares) | abbreviatedNumber }}</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Hash Rate</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{userService.settings.minerStats.hash | number}} H/s</b>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span matLine class="text-inside-grid">Workers</span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <b class="text-inside-grid">{{(userService.settings.minerWorkerStats | keys).length-1}}</b>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>    
+  </mat-tab>
+  <mat-tab label="Pool Stats">
     <ng-template mat-tab-label>
       <mat-icon>insert_chart</mat-icon>
-      <span *ngIf="pool">{{pool.name}}</span>
-    </ng-template>    
+      Pool Stats
+    </ng-template>
     <mat-card>
       <mat-grid-list cols="2" rowHeight="32px" *ngIf="pool">
         <mat-grid-tile>
@@ -45,7 +100,7 @@
           <span matLine class="text-inside-grid">Total Hashes</span>
         </mat-grid-tile>
         <mat-grid-tile>
-          <b class="text-inside-grid">{{pool.totalHashes | abbreviatedNumber }}H</b>
+          <b class="text-inside-grid">{{pool.totalHashes | abbreviatedNumber }}</b>
         </mat-grid-tile>
         <mat-grid-tile>
           <span matLine class="text-inside-grid">Total Blocks Found</span>

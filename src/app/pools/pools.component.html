@@ -1,76 +1,82 @@
-<mat-toolbar>Pools</mat-toolbar>
+<mat-toolbar color="primary">Pools</mat-toolbar>
 <button mat-fab class="add-button" (click)="openAddDialog()">
   <mat-icon>add</mat-icon>
 </button>
-<div class="pools-header">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
-<div class="pools-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort>
+<mat-card>
+    <mat-card-content>
+      <div class="pools-header">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
+                
+    <!--<div class="pools-container mat-elevation-z8">-->
+      <mat-table #table [dataSource]="dataSource" matSort>
 
-    <!--
-    <ng-container matColumnDef="selected">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-          <mat-radio-button value="element.apiUrl" (change)="userService.settings.selectedPoolApiUrl = element.apiUrl" [checked]="userService.settings.selectedPoolApiUrl == element.apiUrl"></mat-radio-button>
-      </mat-cell>
-    </ng-container>
-  -->
-  
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-    </ng-container>
+        <!--
+        <ng-container matColumnDef="selected">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+              <mat-radio-button value="element.apiUrl" (change)="userService.settings.selectedPoolApiUrl = element.apiUrl" [checked]="userService.settings.selectedPoolApiUrl == element.apiUrl"></mat-radio-button>
+          </mat-cell>
+        </ng-container>
+      -->
+      
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="apiUrl">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.apiUrl}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="apiUrl">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> API </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.apiUrl}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="hashRate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Hash Rate </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.hashRate | abbreviatedNumber}}H/s </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="hashRate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Hash Rate </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.hashRate | abbreviatedNumber}}H/s </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="miners">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Miners </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.miners | number}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="miners">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Miners </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.miners | number}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="totalHashes">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Total Hashes </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.totalHashes | abbreviatedNumber}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="totalHashes">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Total Hashes </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.totalHashes | abbreviatedNumber}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="totalBlocksFound">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Blocks Found </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.totalBlocksFound | number}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="totalBlocksFound">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Blocks Found </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.totalBlocksFound | number}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="lastBlockFoundTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Found </mat-header-cell>
-      <mat-cell *matCellDef="let element"> 
-        <span matTooltip="{{element.lastBlockFoundTime | date:'short' }}">
-          {{element.lastBlockFoundTime | amTimeAgo }}
-        </span>
-      </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="lastBlockFoundTime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Last Found </mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+            <span matTooltip="{{element.lastBlockFoundTime | date:'short' }}">
+              {{element.lastBlockFoundTime | amTimeAgo }}
+            </span>
+          </mat-cell>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row 
-      *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row._id]"></mat-row>
-  </mat-table>
-  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-  </mat-paginator>
-  <!--</mat-card>-->
-</div>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row 
+          *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row._id]"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
+      <!--</mat-card>-->
+    <!--</div>-->
+  </mat-card-content>
+</mat-card>
+
 <!--
 <br/>
 <mat-card>

@@ -1,4 +1,4 @@
-<mat-toolbar>Settings</mat-toolbar>
+<mat-toolbar color="primary">Settings</mat-toolbar>
 <mat-card>
     <mat-card-content>
 <!--
@@ -11,7 +11,6 @@
 <mat-form-field>
     <input matInput [(ngModel)]="userService.settings.selectedAddress" placeholder="Payment address to monitor">
 </mat-form-field>
-</div>
 <mat-form-field>
   <mat-select [(ngModel)]="userService.settings.selectedPoolApiUrl" placeholder="Selected Pool">
     <mat-option *ngFor="let pool of pools" [value]="pool.apiUrl">
@@ -19,6 +18,11 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+<!--
+    <mat-slide-toggle [checked]="userService.settings.isDarkTheme" (change)="userService.settings.isDarkTheme!=userService.settings.isDarkTheme">Dark Theme</mat-slide-toggle>    
+    -->
+</div>
+
 </mat-card-content>
 <mat-card-actions>
     <div fxFlex></div>

@@ -20,9 +20,7 @@ export class SettingsComponent implements OnInit {
     private poolStoreService: PoolStoreService,
     private userService: UserService,
   ) {
-    this.poolStoreService.getPools().subscribe(pools => {
-      this.pools = pools;
-    });
+    this.pools = this.userService.settings.pools;
   }
 
   ngOnInit() {

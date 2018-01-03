@@ -43,17 +43,12 @@ export class PoolsComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {
-    this.poolStoreService.getPools().subscribe(pools => {
-      this.pools = pools;
+    this.userService.valueChanged = (oldvalue, newvalue) => {
+      this.pools = this.userService.settings.pools;
       this.updateStats();
-    }, error => {
-      if (error.status === 500) {
-      }
-      this.updateStats();
-      this.snackBar.open(error.message, null, {
-        duration: 2000,
-      });
-    });
+    };
+    this.pools = this.userService.settings.pools;
+    this.updateStats();
   }
 
   ngOnInit() {
@@ -164,10 +159,8 @@ export class PoolsComponent implements OnInit {
         this.snackBar.open('Pool added.', 'Ok', {
           duration: 2000,
         });
-        this.poolStoreService.getPools().subscribe(pools => {
-          this.pools = pools;
-          this.updateStats();
-        });
+        this.pools = this.userService.settings.pools;
+        this.updateStats();
       }, error => {
         if (error.status === 500) {
         }

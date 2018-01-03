@@ -16,6 +16,7 @@ import {
   MatCheckboxModule,
   MatRadioModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatCardModule,
   MatListModule,
   MatGridListModule,
@@ -43,6 +44,7 @@ import { PaymentsComponent } from './pool/payments/payments.component';
 import { DifficultyToHashRatePipe } from './pipes/difficultyToHashRate.pipe';
 import { AbbreviatedNumberPipe } from './pipes/abbreviatedNumber.pipe';
 import { ToXMRPipe } from './pipes/toXMR.pipe';
+import { KeysPipe } from './pipes/keys.pipe';
 import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PoolComponent } from './pool/pool.component';
@@ -57,6 +59,7 @@ import { PoolComponent } from './pool/pool.component';
     DifficultyToHashRatePipe,
     AbbreviatedNumberPipe,
     ToXMRPipe,
+    KeysPipe,
     PoolsAddDialogComponent,
     SettingsComponent,
     PoolComponent
@@ -81,6 +84,7 @@ import { PoolComponent } from './pool/pool.component';
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatCardModule,
     MatListModule,
     MatGridListModule,
