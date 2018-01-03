@@ -36,9 +36,6 @@ export class AppComponent {
 
     this.poolStoreService.getPools().subscribe(pools => {
       this.userService.setPools(pools);
-      this.userService.settings.pools.forEach((pool, index) => {
-        this.poolApiService.updateStat(pool);
-      });
       if (this.userService.settings.selectedPoolApiUrl == null) {
         this.userService.settings.selectedPoolApiUrl = pools[0].apiUrl;
         this.getStats();

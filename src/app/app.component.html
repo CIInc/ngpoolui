@@ -1,114 +1,105 @@
-<div class="ngpoolui-container"><!--  [class.ngpoolui-is-mobile]="mobileQuery.matches" -->
+<div class="ngpoolui-container">
+  <!--  [class.ngpoolui-is-mobile]="mobileQuery.matches" -->
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <!--
-      <button mat-icon-button aria-label="Navigation menu" (click)="snav.toggle()" fxShow="false" [fxShow.xs]="true">
+      <button mat-icon-button aria-label="Navigation menu" (click)="snav.toggle()">
         <mat-icon aria-hidden="true">menu</mat-icon>
       </button>
-    -->
-      <button mat-button routerLink="/home">
-        <mat-icon>home</mat-icon>
-        Home
-      </button>
-      <button mat-button routerLink="/pools">
-        <mat-icon>pools</mat-icon>
-        Pools
-      </button>
+      <h1 class="ngpoolui-app-name" fxShow [fxShow.xs]="false">Monero Pool UI</h1>
       <!--
-      <button mat-button routerLink="/blocks" fxShow [fxShow.xs]="false">
-        <mat-icon>widgets</mat-icon>
-        Blocks
-      </button>
-      <button mat-button routerLink="/payments" fxShow [fxShow.xs]="false">
-        <mat-icon>payments</mat-icon>
-        Payments
-      </button>
-    -->
+          <button mat-button routerLink="/home">
+            <mat-icon>home</mat-icon>
+            Home
+          </button>
+          <button mat-button routerLink="/pools">
+            <mat-icon>pools</mat-icon>
+            Pools
+          </button>
+          <button mat-button routerLink="/blocks" fxShow [fxShow.xs]="false">
+            <mat-icon>widgets</mat-icon>
+            Blocks
+          </button>
+          <button mat-button routerLink="/payments" fxShow [fxShow.xs]="false">
+            <mat-icon>payments</mat-icon>
+            Payments
+          </button>
+        -->
       <div fxFlex></div>
-      <div *ngIf="userService.settings.networkStats" class="mat-caption" fxShow [fxShow.xs]="false">
-          Network: <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
-      </div>
-      &nbsp;
-      <div *ngIf="userService.settings.poolStats" class="mat-caption" fxShow [fxShow.xs]="false">
-          Pool: <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
-      </div>
-      &nbsp;
-      <div *ngIf="userService.settings.minerStats" class="mat-caption" fxShow [fxShow.xs]="false">
-          You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
-      </div>
-      <!--
-      <span *ngIf="userService.settings.minerWorkerStats">
-        Workers: <b>{{(userService.settings.minerWorkerStats | keys).length-1}}</b>
-      &nbsp;Due: <b>{{userService.settings.minerStats.amtDue | toXMR | number:'1.0-4' }} XMR</b>
-      &nbsp;Paid: <b>{{userService.settings.minerStats.amtPaid | toXMR | number:'1.0-4' }} XMR</b>
-      </span>
-      -->
-
-      <div fxFlex></div>
-      <button mat-icon-button routerLink="/settings">
-        <mat-icon>settings</mat-icon>
-      </button>
-      <!--
-      <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #appMenu="matMenu">
-        <button mat-menu-item routerLink="/settings"> Settings </button>
-        <button mat-menu-item routerLink="/help"> Help </button>
-      </mat-menu>
-    -->
-    </mat-toolbar-row>
-    <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
       <div *ngIf="userService.settings.networkStats" class="mat-caption">
-          Network: <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
+        Network:
+        <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
       </div>
       &nbsp;
       <div *ngIf="userService.settings.poolStats" class="mat-caption">
-          Pool: <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
+        Pool:
+        <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
       </div>
       &nbsp;
       <div *ngIf="userService.settings.minerStats" class="mat-caption">
-          You: <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
+        You:
+        <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
       </div>
+      <!--
+          <div fxFlex></div>
+          <button mat-icon-button routerLink="/settings">
+            <mat-icon>settings</mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item routerLink="/settings"> 
+              <mat-icon>settings</mat-icon>
+              Settings 
+            </button>
+            <button mat-menu-item routerLink="/help">
+              <mat-icon>help</mat-icon>
+              Help
+            </button>
+          </mat-menu>
+          -->
     </mat-toolbar-row>
-    <!--
-    <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
-      <div *ngIf="userService.settings.minerWorkerStats" class="mat-caption">
-        Workers: <b>{{(userService.settings.minerWorkerStats | keys).length-1}}</b>
-      &nbsp;Due: <b>{{userService.settings.minerStats.amtDue | toXMR | number:'1.0-4' }} XMR</b>
-      &nbsp;Paid: <b>{{userService.settings.minerStats.amtPaid | toXMR | number:'1.0-4' }} XMR</b>      
-      </div>
-    </mat-toolbar-row>
-  -->
   </mat-toolbar>
+
   <mat-sidenav-container class="ngpoolui-sidenav-container">
-                         <!--[style.marginTop.px]="mobileQuery.matches ? 56 : 0">-->
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-    <!--<mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">-->
-      <mat-toolbar color="primary">
-        <span>Monero Pool UI</span>
+    <!--[style.marginTop.px]="mobileQuery.matches ? 56 : 0">-->
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'push' : 'side'">
+      <!-- [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" -->
+      <!--<mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">-->
+      <!--
+      <mat-toolbar>
+        <span>Menu</span>
       </mat-toolbar>
+    -->
+      <!-- (click)="snav.close()" -->
       <mat-nav-list>
+        <!--
+        <h3 mat-subheader>Menu</h3>
+        -->
+        <mat-divider></mat-divider>
         <a mat-list-item routerLink="/home">
-          <mat-icon mat-list-icon>home</mat-icon>
+          <mat-icon matListIcon>home</mat-icon>
           <span mat-line>Home</span>
         </a>
         <mat-divider></mat-divider>
+        <!--
         <h3 mat-subheader>Network</h3>
+        -->
         <a mat-list-item routerLink="/pools">
-          <mat-icon mat-list-icon>pools</mat-icon>
+          <mat-icon matListIcon>pools</mat-icon>
           <span mat-line>Pools</span>
         </a>
         <mat-divider></mat-divider>
-        <h3 mat-subheader>Settings</h3>
-        <a mat-list-item>
-          <mat-icon mat-list-icon>settings</mat-icon>
+        <!--<h3 mat-subheader>Settings</h3>-->
+        <a mat-list-item routerLink="/settings">
+          <mat-icon matListIcon>settings</mat-icon>
           <h4 mat-line>Settings</h4>
         </a>
+        <mat-divider></mat-divider>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
+
       <div class="ngpoolui-sidenav-content">
         <!--<app-messages></app-messages>-->
         <router-outlet></router-outlet>
@@ -118,18 +109,17 @@
           <span>
             Powered by
             <a href="https://github.com/CIInc/ngpoolui" target="_new">ngpoolui</a>
+            <!--
+            &nbsp;
             Credits
             <a href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
             <a href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a>
+            -->
           </span>
           <div fxFlex></div>
-          <span fxShow [fxShow.xs]="false">
-              © Continuous Integration, Inc. 2017             
-          </span>
-        </mat-toolbar-row>
-        <mat-toolbar-row class="mat-caption" fxShow="false" [fxShow.xs]="true">
           <span>
-              © Continuous Integration, Inc. 2017             
+            <!-- fxShow [fxShow.xs]="false" -->
+            © Continuous Integration, Inc. 2017
           </span>
         </mat-toolbar-row>
       </mat-toolbar>

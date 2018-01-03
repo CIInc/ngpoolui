@@ -10,7 +10,12 @@
 /*
     position: fixed;
 */
-
+  
+.ngpoolui-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
 .ngpoolui-is-mobile .ngpoolui-toolbar {
     position: fixed;
     /* Make sure the toolbar will stay on top of the content as it scrolls past. */
@@ -20,12 +25,7 @@
   h1.ngpoolui-app-name {
     margin-left: 8px;
   }
-  
-  .ngpoolui-sidenav-container {
-    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-    flex: 1;
-  }
+
   
   .ngpoolui-is-mobile .ngpoolui-sidenav-container {
     /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the

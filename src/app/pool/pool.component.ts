@@ -35,6 +35,7 @@ export class PoolComponent implements OnInit {
   getPool(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.pool = this.userService.settings.pools.find(p => p['_id'] === id);
+    this.getStats();
   }
   getStats() {
     if (this.pool == null) {
