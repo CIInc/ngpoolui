@@ -7,6 +7,7 @@ import { PaymentsComponent } from './pool/payments/payments.component';
 import { PoolsComponent } from './pools/pools.component';
 import { PoolComponent } from './pool/pool.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'pools/:id', component: PoolComponent },
   { path: 'pools/:id/blocks', component: BlocksComponent },
   { path: 'pools/:id/payments', component: PaymentsComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'help', component: AboutComponent },
 ];
 
 @NgModule({

@@ -6,7 +6,6 @@ import { PoolApiService } from '../services/pool-api.service';
 import { PoolStoreService } from '../services/pool-store.service';
 import { UserService } from '../services/user.service';
 import { Pool } from '../models/pool';
-import { Pools } from '../models/pools';
 
 @Component({
   selector: 'app-pool',
@@ -22,7 +21,7 @@ export class PoolComponent implements OnInit {
   constructor(
     private poolApiService: PoolApiService,
     private poolStoreService: PoolStoreService,
-    private userService: UserService,
+    public userService: UserService,
     private route: ActivatedRoute,
     private location: Location,
   ) {
@@ -41,12 +40,14 @@ export class PoolComponent implements OnInit {
     if (this.pool == null) {
       return;
     }
-    this.poolApiService.updateStat(this.pool);
+    this.poolApiService.updatePoolStat(this.pool);
 
-    this.poolApiService.getMinerWorkerStats(this.pool.apiUrl, this.userService.settings.selectedAddress).subscribe(results => {
-      this.userService.settings.minerWorkerStats = results;
-      this.userService.save();
-    });
+    if (this.userService.settings.selectedAddress !== '') {
+      this.poolApiService.getMinerWorkerStats(this.pool.apiUrl, this.userService.settings.selectedAddress).subscribe(results => {
+        this.userService.settings.minerWorkerStats = results;
+        this.userService.save();
+      });
+    }
 
     this.poolApiService.getPoolChartHashRate(this.pool.apiUrl).subscribe(result => {
       this.chartDataHashRate = result;

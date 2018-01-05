@@ -1,5 +1,5 @@
 export class Pool {
-    //id: number;
+    id: number; // needed for cdk table sorts?!
     name: string;
     webUrl: string;
     apiUrl: string;

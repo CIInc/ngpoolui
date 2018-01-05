@@ -45,9 +45,11 @@ import { DifficultyToHashRatePipe } from './pipes/difficultyToHashRate.pipe';
 import { AbbreviatedNumberPipe } from './pipes/abbreviatedNumber.pipe';
 import { ToXMRPipe } from './pipes/toXMR.pipe';
 import { KeysPipe } from './pipes/keys.pipe';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dialog.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PoolComponent } from './pool/pool.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -60,9 +62,11 @@ import { PoolComponent } from './pool/pool.component';
     AbbreviatedNumberPipe,
     ToXMRPipe,
     KeysPipe,
+    EllipsisPipe,
     PoolsAddDialogComponent,
     SettingsComponent,
-    PoolComponent
+    PoolComponent,
+    AboutComponent
   ],
   entryComponents: [
     PoolsAddDialogComponent

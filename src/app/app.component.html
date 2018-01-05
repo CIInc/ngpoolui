@@ -1,30 +1,66 @@
-<div class="ngpoolui-container">
-  <!--  [class.ngpoolui-is-mobile]="mobileQuery.matches" -->
-  <mat-toolbar color="primary">
+<div class="app-container" [class.app-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="app-toolbar">
     <mat-toolbar-row>
+      <!--
       <button mat-icon-button aria-label="Navigation menu" (click)="snav.toggle()">
         <mat-icon aria-hidden="true">menu</mat-icon>
       </button>
-      <h1 class="ngpoolui-app-name" fxShow [fxShow.xs]="false">Monero Pool UI</h1>
-      <!--
-          <button mat-button routerLink="/home">
-            <mat-icon>home</mat-icon>
-            Home
-          </button>
-          <button mat-button routerLink="/pools">
-            <mat-icon>pools</mat-icon>
-            Pools
-          </button>
-          <button mat-button routerLink="/blocks" fxShow [fxShow.xs]="false">
-            <mat-icon>widgets</mat-icon>
-            Blocks
-          </button>
-          <button mat-button routerLink="/payments" fxShow [fxShow.xs]="false">
-            <mat-icon>payments</mat-icon>
-            Payments
-          </button>
-        -->
+      <h1 class="app-app-name">Monero Pool</h1>
+      -->
+                  <button mat-button routerLink="/home">
+                    <mat-icon>home</mat-icon>
+                    Monero Pool
+                  </button>
+                  <button mat-button routerLink="/pools">
+                    <mat-icon>pools</mat-icon>
+                    Pools
+                  </button>
+                  <!--
+                  <button mat-button routerLink="/blocks" fxShow [fxShow.xs]="false">
+                    <mat-icon>widgets</mat-icon>
+                    Blocks
+                  </button>
+                  <button mat-button routerLink="/payments" fxShow [fxShow.xs]="false">
+                    <mat-icon>payments</mat-icon>
+                    Payments
+                  </button>
+                -->
       <div fxFlex></div>
+      <div class="mat-caption" fxShow [fxShow.xs]="false">
+        <span *ngIf="userService.settings.networkStats">
+          Network:
+          <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
+        </span>
+        &nbsp;
+        <span *ngIf="userService.settings.poolStats">
+          Pool:
+          <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
+        </span>
+        &nbsp;
+        <span *ngIf="userService.settings.minerStats">
+          You:
+          <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
+        </span>
+      </div>
+                  <div fxFlex></div>
+                  <button mat-icon-button routerLink="/settings">
+                    <mat-icon>settings</mat-icon>
+                  </button>
+                  <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #appMenu="matMenu">
+                    <button mat-menu-item routerLink="/about"> 
+                      <mat-icon>info</mat-icon>
+                      About 
+                    </button>
+                    <button mat-menu-item routerLink="/help">
+                      <mat-icon>help</mat-icon>
+                      Help
+                    </button>
+                  </mat-menu>
+    </mat-toolbar-row>
+    <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
       <div *ngIf="userService.settings.networkStats" class="mat-caption">
         Network:
         <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
@@ -34,43 +70,33 @@
         Pool:
         <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
       </div>
+      <!--
       &nbsp;
+      <div *ngIf="userService.settings.pools" class="mat-caption">
+        Pools:
+        <b>{{userService.settings.pools.length | abbreviatedNumber }}</b>
+      </div>
+      &nbsp;
+      <div *ngIf="userService.settings.pools" class="mat-caption">
+        Miners:
+        <b>{{userService.getTotalMiners() | abbreviatedNumber }}</b>
+      </div>
+    -->
+    &nbsp;
       <div *ngIf="userService.settings.minerStats" class="mat-caption">
         You:
         <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
       </div>
-      <!--
-          <div fxFlex></div>
-          <button mat-icon-button routerLink="/settings">
-            <mat-icon>settings</mat-icon>
-          </button>
-          <button mat-icon-button [matMenuTriggerFor]="appMenu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #appMenu="matMenu">
-            <button mat-menu-item routerLink="/settings"> 
-              <mat-icon>settings</mat-icon>
-              Settings 
-            </button>
-            <button mat-menu-item routerLink="/help">
-              <mat-icon>help</mat-icon>
-              Help
-            </button>
-          </mat-menu>
-          -->
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <mat-sidenav-container class="ngpoolui-sidenav-container">
-    <!--[style.marginTop.px]="mobileQuery.matches ? 56 : 0">-->
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'push' : 'side'">
-      <!-- [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" -->
+
+  <mat-sidenav-container class="app-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'push' : 'push'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <!--<mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">-->
-      <!--
       <mat-toolbar>
-        <span>Menu</span>
+        <span>Monero Pool UI Menu</span>
       </mat-toolbar>
-    -->
       <!-- (click)="snav.close()" -->
       <mat-nav-list>
         <!--
@@ -100,7 +126,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
 
-      <div class="ngpoolui-sidenav-content">
+      <div class="app-main-content">
         <!--<app-messages></app-messages>-->
         <router-outlet></router-outlet>
       </div>

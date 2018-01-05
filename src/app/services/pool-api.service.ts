@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import { Pool } from '../models/pool';
-import { Pools } from '../models/pools';
 
 @Injectable()
 export class PoolApiService {
@@ -44,8 +43,9 @@ export class PoolApiService {
     return this.http.get(apiUrl + '/pool/payments');
   }
 
-  updateStat(pool: Pool) {
+  updatePoolStat(pool: Pool) {
     this.getPoolStats(pool.apiUrl).subscribe(result => {
+      //pool.id = 1;
       pool.hashRate = result.pool_statistics.hashRate;
       pool.miners = result.pool_statistics.miners;
       pool.totalHashes = result.pool_statistics.totalHashes;

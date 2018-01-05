@@ -7,27 +7,25 @@ const localStorageKey = 'settings';
 export class UserService {
   settings = {
     isDarkTheme: false,
-    intervalTime: 10000,
     selectedPoolApiUrl: null,
     selectedAddress: '',
     networkStats: null,
+    poolIntervalTime: 30000,
     poolStats: null,
+    minerIntervalTime: 10000,
     minerStats: null,
     minerWorkerStats: null,
     pools: []
   };
 
-  valueChanged: (oldVal, newVal) => void;
+  //valueChanged: (oldVal, newVal) => void;
 
   constructor() {
-    this.valueChanged = (() => {});
     this.load();
-  }
 
-  setPools(pools: Pool[]) {
-    this.valueChanged(this.settings.pools, pools);
-    this.settings.pools = pools;
-    this.save();
+    //// Usage:  
+    ////this.userService.valueChanged = (oldvalue, newvalue) => {...};
+    //this.valueChanged = (() => {});
   }
 
   load() {
@@ -46,5 +44,18 @@ export class UserService {
     }
     */
     localStorage.setItem(localStorageKey, JSON.stringify(this.settings));
+  }
+
+  setPools(pools: Pool[]) {
+    //this.valueChanged(this.settings.pools, pools);
+    //pools.forEach((pool, index) => {
+    //  pool.id = index;
+    //});
+    this.settings.pools = pools;
+    this.save();
+  }
+
+  getTotalMiners() {
+    return this.settings.pools.map(pool => pool.miners).reduce((accumulator, currentValue) => accumulator + currentValue);
   }
 }

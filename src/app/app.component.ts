@@ -26,7 +26,7 @@ export class AppComponent {
   constructor(
     private poolApiService: PoolApiService,
     private poolStoreService: PoolStoreService,
-    private userService: UserService,
+    public userService: UserService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher
   ) {
@@ -47,7 +47,7 @@ export class AppComponent {
     });
 
     // Create an observable that emits a value every 10 seconds
-    const myInterval = interval(this.userService.settings.intervalTime);
+    const myInterval = interval(this.userService.settings.minerIntervalTime);
     const subscribe = myInterval.subscribe(val => {
       this.getStats();
     });
@@ -70,12 +70,10 @@ export class AppComponent {
         this.userService.settings.minerStats = results;
         this.userService.save();
       });
-      /*
       this.poolApiService.getMinerWorkerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
         this.userService.settings.minerWorkerStats = results;
         this.userService.save();
       });
-      */
       
     }
   }

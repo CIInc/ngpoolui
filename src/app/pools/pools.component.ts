@@ -1,16 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-//import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-//import { of } from 'rxjs/observable/of';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import { PoolApiService } from '../services/pool-api.service';
 import { PoolStoreService } from '../services/pool-store.service';
 import { UserService } from '../services/user.service';
 import { Pool } from '../models/pool';
-import { Pools } from '../models/pools';
 import { PoolsAddDialogComponent } from './pools-add-dialog/pools-add-dialog.component';
 
 @Component({
@@ -26,14 +23,9 @@ export class PoolsComponent implements OnInit {
   pools: Pool[] = []; // Pools.Default();
   searchResults: Pool[] = [];
 
-  dataSource = new MatTableDataSource(this.pools);
-  searchDataSource;
+  dataSource;// = new MatTableDataSource(this.pools);
 
   displayedColumns = ['name', 'hashRate', 'miners', 'totalHashes', 'totalBlocksFound', 'lastBlockFoundTime'];
-
-  poolName = new FormControl('', [Validators.required]);
-  poolWebUrl = new FormControl('');
-  poolApiUrl = new FormControl('', [Validators.required]);
 
   constructor(
     private poolApiService: PoolApiService,
@@ -43,15 +35,12 @@ export class PoolsComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {
-    this.userService.valueChanged = (oldvalue, newvalue) => {
-      this.pools = this.userService.settings.pools;
-      this.updateStats();
-    };
     this.pools = this.userService.settings.pools;
     this.updateStats();
   }
 
   ngOnInit() {
+    this.pools = this.pools.sort((a, b) => a.miners < b.miners ? 1 : 0);
   }
 
   updateStats() {
@@ -59,7 +48,7 @@ export class PoolsComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.pools.forEach((pool, index) => {
-      this.poolApiService.updateStat(pool);
+      this.poolApiService.updatePoolStat(pool);
     });
   }
 
@@ -73,35 +62,16 @@ export class PoolsComponent implements OnInit {
    * Set the sort after the view init since this component will
    * be able to query its view for the initialized sort.
    */
-/*
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-*/
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-
-  search(searchValue: string) {
-    this.searchPaymentAddress(searchValue)
-    .subscribe(results => {
-      const pools = [];
-      results.forEach((result, index) => {
-        if (result != null && result['totalHashes'] !== undefined) {
-          pools.push(this.pools[index]);
-        }
-      });
-      this.searchDataSource = new MatTableDataSource(pools);
-      this.snackBar.open('Search returned ' + pools.length + ' pools with this address', 'Ok', {
-        duration: 1000,
-      });
-    });
-  }
-
 
   // Helper methods to iterate through all the pools.
 
@@ -110,16 +80,6 @@ export class PoolsComponent implements OnInit {
     this.pools.forEach(pool => {
       observableBatch.push(
         this.poolApiService.getPoolStats(pool.apiUrl)
-      );
-    });
-    return forkJoin(observableBatch);
-  }
-
-  searchPaymentAddress(paymentAddress: string): Observable<Pool[]> {
-    const observableBatch = [];
-    this.pools.forEach(pool => {
-      observableBatch.push(
-        this.poolApiService.getMinerStats(pool.apiUrl, paymentAddress)
       );
     });
     return forkJoin(observableBatch);
@@ -141,6 +101,7 @@ export class PoolsComponent implements OnInit {
 
   addPool(name: string, webUrl: string, apiUrl: string) {
     const newpool: Pool = {
+      id: 0,
       name: name,
       webUrl: webUrl,
       apiUrl: apiUrl,
@@ -175,12 +136,6 @@ export class PoolsComponent implements OnInit {
         duration: 2000,
       });
     });
-  }
-
-  getErrorMessage() {
-    return this.poolName.hasError('required') ? 'You must enter a value' :
-        // this.poolName.hasError('email') ? 'Not a valid email' :
-            '';
   }
 
 }

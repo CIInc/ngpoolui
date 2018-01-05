@@ -1,39 +1,114 @@
+<mat-toolbar color="primary">
+  Home
+</mat-toolbar>
+<!--
 <div fxShow="false" [fxShow.xs]="true">
 <mat-toolbar color="primary">
-    <h1 class="ngpoolui-app-name">Monero Pool UI</h1>
+    <h1 class="app-app-name">Monero Pool UI</h1>
 </mat-toolbar>
 </div>
-<mat-card>
-    <!--<h3>Welcome to Monero Pool UI</h3>-->
-    A monitoring portal for all your Monero mining pools.
-    <p></p>
-    <h4>Features</h4>
-    <ul>
-    <li>Register your own pool.</li>
-    <li>Browse all registered pools.</li>
-    <li>Find your payment addresses across all registered pools.</li>
-    <li>Monitor your payment address.</li>
-    </ul>
-    <h4>Technology</h4>
-    <ul>
-    <li>
-        Built with 
-        <a href="https://angular.io" target="_blank">Angular</a> framework and
-        <a href="https://material.angular.io" target="_blank">Angular Material</a>.
-        <!--
-        <a href="https://github.com/angular/angular/releases" target="_blank">5.1</a>
-        <a href="https://github.com/angular/material2/releases" target="_blank">5.0</a>
-        https://cryptonote-pool-api.restlet.io/
-        -->          
-    </li>
-    <li>
-      Works with any <a href="https://github.com/Snipa22/nodejs-pool" target="_blank">nodejs-pool</a> server.
-    </li>
-    <li>
-      Open source project.
-    </li>
-    <li>
-      Active development team.
-    </li>
-  </ul>
+-->
+<!--
+<mat-card [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10" [style.marginBottom.px]="10">
+  test
+</mat-card>
+-->
+<!-- fxLayoutWrap fxFlexFill fxLayout.xs="column" -->
+<div class="flexcards" fxLayout="row" fxLayoutGap="10px" [style.marginTop.px]="10" [style.marginBottom.px]="10">
+  <mat-card [style.marginLeft.px]="10">
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title *ngIf="userService.settings.minerStats">
+          <span matTooltip="{{ userService.settings.minerStats.amtPaid | toXMR }}">
+          {{userService.settings.minerStats.amtPaid | toXMR | number:'1.0-4' }}
+          </span>
+        </mat-card-title>
+        <mat-card-title *ngIf="!userService.settings.minerStats">-</mat-card-title>
+        <mat-card-subtitle>Amount Paid</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-content>
+    <mat-card-footer style="margin-top: 0px;"></mat-card-footer>
   </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title *ngIf="userService.settings.minerStats">
+          <span matTooltip="{{ userService.settings.minerStats.amtDue | toXMR }}">
+          {{userService.settings.minerStats.amtDue | toXMR | number:'1.0-4' }}
+          </span>
+        </mat-card-title>
+        <mat-card-title *ngIf="!userService.settings.minerStats">-</mat-card-title>
+        <mat-card-subtitle>Amount Due</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title *ngIf="userService.settings.minerStats">
+          <span matTooltip="{{ userService.settings.minerStats.validShares | number }}">
+          {{userService.settings.minerStats.validShares | abbreviatedNumber }}
+          </span>
+        </mat-card-title>
+        <mat-card-title *ngIf="!userService.settings.minerStats">-</mat-card-title>
+        <mat-card-subtitle>Valid Shares</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title *ngIf="userService.settings.minerStats">
+            <span matTooltip="{{ userService.settings.minerStats.totalHashes | number }}">
+                {{userService.settings.minerStats.totalHashes | abbreviatedNumber }}
+            </span>
+        </mat-card-title>
+        <mat-card-title *ngIf="!userService.settings.minerStats">-</mat-card-title>
+        <mat-card-subtitle>Total Hashes</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title *ngIf="userService.settings.minerWorkerStats">
+          {{(userService.settings.minerWorkerStats | keys).length-1}}
+        </mat-card-title>
+        <mat-card-title *ngIf="!userService.settings.minerWorkerStats">-</mat-card-title>
+        <mat-card-subtitle>Workers</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title-group>
+        <mat-card-title *ngIf="userService.settings.minerStats">{{userService.settings.minerStats.hash | number}}&nbsp;H/s</mat-card-title>
+        <mat-card-title *ngIf="!userService.settings.minerStats">-</mat-card-title>
+        <mat-card-subtitle>Hash Rate</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-content>
+  </mat-card>
+      <!-- mat-icon-button -->
+  <!--
+      <button mat-fab color="primary" (click)="alert('add')">
+        <mat-icon>add</mat-icon>
+      </button>
+    -->
+</div>
+<mat-card>
+  <mat-card-content>
+    <h3>Monitor your mining stats</h3>
+    <mat-form-field>
+      <input matInput #paymentAddress placeholder="Enter the payment address to monitor">
+    </mat-form-field>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxFlex></div>
+    <button mat-button (click)="search(paymentAddress.value)">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </mat-card-actions>
+
+</mat-card>

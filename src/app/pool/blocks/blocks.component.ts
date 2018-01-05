@@ -6,7 +6,6 @@ import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular
 import { PoolApiService } from '../../services/pool-api.service';
 import { PoolStoreService } from '../../services/pool-store.service';
 import { UserService } from '../../services/user.service';
-import { Pools } from '../../models/pools';
 import { Pool } from '../../models/pool';
 
 @Component({

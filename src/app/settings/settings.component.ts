@@ -4,7 +4,6 @@ import { PoolApiService } from '../services/pool-api.service';
 import { PoolStoreService } from '../services/pool-store.service';
 import { UserService } from '../services/user.service';
 import { Pool } from '../models/pool';
-import { Pools } from '../models/pools';
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +17,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private poolApiService: PoolApiService,
     private poolStoreService: PoolStoreService,
-    private userService: UserService,
+    public userService: UserService,
   ) {
     this.pools = this.userService.settings.pools;
   }

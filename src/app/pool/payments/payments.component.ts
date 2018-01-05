@@ -7,7 +7,6 @@ import { PoolApiService } from '../../services/pool-api.service';
 import { PoolStoreService } from '../../services/pool-store.service';
 import { UserService } from '../../services/user.service';
 import { Pool } from '../../models/pool';
-import { Pools } from '../../models/pools';
 
 @Component({
   selector: 'app-payments',
