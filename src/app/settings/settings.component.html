@@ -12,7 +12,7 @@
     <input matInput [(ngModel)]="userService.settings.selectedAddress" placeholder="Payment address to monitor">
 </mat-form-field>
 <mat-form-field>
-  <mat-select [(ngModel)]="userService.settings.selectedPoolApiUrl" placeholder="Selected Pool">
+  <mat-select [(ngModel)]="userService.settings.selectedPoolApiUrl" placeholder="Preferred Pool">
     <mat-option *ngFor="let pool of pools" [value]="pool.apiUrl">
       {{ pool.name }}
     </mat-option>

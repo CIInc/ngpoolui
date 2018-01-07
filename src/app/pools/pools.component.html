@@ -14,7 +14,7 @@
 </mat-card>
 <br/>
 -->
-<div class="pools-container mat-elevation-z2">
+<div class="pools-container mat-elevation-z2"><!--  [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10" -->
     <div class="pools-header">
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -81,7 +81,6 @@
     </mat-table>
     <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
     </mat-paginator>
-    <!--</mat-card>-->
   </div>
 
 <!--

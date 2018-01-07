@@ -9,12 +9,15 @@ export class UserService {
     isDarkTheme: false,
     selectedPoolApiUrl: null,
     selectedAddress: '',
+    addresses: [],
     networkStats: null,
     poolIntervalTime: 30000,
     poolStats: null,
     minerIntervalTime: 10000,
+    chartIntervalTime: 30000,
     minerStats: null,
     minerWorkerStats: null,
+    minerWorkerChartHashRate: null,
     pools: []
   };
 
@@ -32,6 +35,10 @@ export class UserService {
     const cache: string = localStorage.getItem(localStorageKey);
     if (cache) {
       this.settings = JSON.parse(cache);
+    }
+    // Remove once the schema changes are detected
+    if (this.settings.addresses == null) {
+      this.settings.addresses = [];
     }
   }
 

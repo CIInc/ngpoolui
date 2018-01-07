@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   Home
 </mat-toolbar>
-<!--
+<!--  
 <div fxShow="false" [fxShow.xs]="true">
 <mat-toolbar color="primary">
     <h1 class="app-app-name">Monero Pool UI</h1>
@@ -13,8 +13,8 @@
   test
 </mat-card>
 -->
-<!-- fxLayoutWrap fxFlexFill fxLayout.xs="column" -->
-<div class="flexcards" fxLayout="row" fxLayoutGap="10px" [style.marginTop.px]="10" [style.marginBottom.px]="10">
+<!-- fxLayoutWrap fxFlexFill fxLayout.xs="column" [style.marginTop.px]="10" [style.marginBottom.px]="10" -->
+<div class="flexcards" fxLayout="row" fxLayoutGap="10px" [style.marginTop.px]="10">
   <mat-card [style.marginLeft.px]="10">
     <mat-card-content>
       <mat-card-title-group>
@@ -95,7 +95,13 @@
       </button>
     -->
 </div>
-<mat-card>
+<mat-card *ngIf="userService.settings.minerWorkerStats" [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10">
+  <mat-card-content>
+      <div appGoogleChart id="area_chart" [chartData]="area_ChartData" [chartOptions]= "area_ChartOptions" chartType="AreaChart" GoogleChart></div>
+      <!--  (itemSelect)="itemSelected($event)" (itemDeselect)="itemDeselected($event)" -->
+  </mat-card-content>
+</mat-card>
+<mat-card [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10">
   <mat-card-content>
     <h3>Monitor your mining stats</h3>
     <mat-form-field>

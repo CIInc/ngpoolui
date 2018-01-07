@@ -91,8 +91,8 @@
   </mat-toolbar>
 
 
-  <mat-sidenav-container class="app-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'push' : 'push'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+  <mat-sidenav-container class="app-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 112 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'push' : 'push'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="112">
       <!--<mat-sidenav #start [mode]="mode" [fixedInViewport]="mobileQuery.matches">-->
       <mat-toolbar>
         <span>Monero Pool UI Menu</span>
@@ -125,7 +125,6 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-
       <div class="app-main-content">
         <!--<app-messages></app-messages>-->
         <router-outlet></router-outlet>

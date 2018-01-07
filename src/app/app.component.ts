@@ -18,6 +18,8 @@ export class AppComponent {
   // Side menu options
   modeIndex = 2;
   get mode() { return ['side', 'over', 'push'][this.modeIndex]; }
+  
+  subcription1;
 
   mobileQuery: MediaQueryList;
 
@@ -38,7 +40,6 @@ export class AppComponent {
       this.userService.setPools(pools);
       if (this.userService.settings.selectedPoolApiUrl == null) {
         this.userService.settings.selectedPoolApiUrl = pools[0].apiUrl;
-        this.getStats();
       }
     }, error => {
       if (error.status === 500) {
@@ -46,14 +47,20 @@ export class AppComponent {
       console.warn(error.message);
     });
 
-    // Create an observable that emits a value every 10 seconds
-    const myInterval = interval(this.userService.settings.minerIntervalTime);
-    const subscribe = myInterval.subscribe(val => {
-      this.getStats();
+    this.getMinerStats();
+    const interval1 = interval(this.userService.settings.minerIntervalTime);
+    this.subcription1 = interval1.subscribe(val => {
+      this.getMinerStats();
+    });
+
+    this.getPoolStats();
+    const interval2 = interval(this.userService.settings.poolIntervalTime);
+    this.subcription1 = interval2.subscribe(val => {
+      this.getPoolStats();
     });
   }
 
-  getStats() {
+  getPoolStats() {
     if (this.userService.settings.selectedPoolApiUrl == null) {
       return;
     }
@@ -65,21 +72,26 @@ export class AppComponent {
       this.userService.settings.poolStats = results.pool_statistics;
       this.userService.save();
     });
-    if (this.userService.settings.selectedAddress !== '') {
-      this.poolApiService.getMinerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
-        this.userService.settings.minerStats = results;
-        this.userService.save();
-      });
-      this.poolApiService.getMinerWorkerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
-        this.userService.settings.minerWorkerStats = results;
-        this.userService.save();
-      });
-      
+  }
+  getMinerStats() {
+    if (this.userService.settings.selectedPoolApiUrl == null || this.userService.settings.selectedAddress == null) {
+      return;
     }
+    this.poolApiService.getMinerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress)
+    .subscribe(results => {
+      this.userService.settings.minerStats = results;
+      this.userService.save();
+    });
+    this.poolApiService.getMinerWorkerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress)
+      .subscribe(results => {
+      this.userService.settings.minerWorkerStats = results;
+      this.userService.save();
+    });
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    //this.subcription1.dispose();
   }
 
 }

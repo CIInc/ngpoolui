@@ -19,7 +19,7 @@
     <span *ngIf="pool">{{pool.name}}</span>
 </mat-toolbar>
 <mat-tab-group>
-  <mat-tab label="My Info">
+  <mat-tab label="My Info" *ngIf="this.pool.apiUrl === this.userService.settings.selectedPoolApiUrl">
     <ng-template mat-tab-label>
       <mat-icon>person</mat-icon>
       My Stats

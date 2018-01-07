@@ -35,6 +35,10 @@ export class PoolApiService {
     return this.http.get(apiUrl + '/miner/' + address + '/stats/allWorkers');
   }
 
+  getMinerWorkerChartHashRate(apiUrl: string, address: string): Observable<any> {
+    return this.http.get(apiUrl + '/miner/' + address + '/chart/hashrate/allWorkers');
+  }
+
   getBlocks(apiUrl: string): Observable<any> {
     return this.http.get(apiUrl + '/pool/blocks');
   }
