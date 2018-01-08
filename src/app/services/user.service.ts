@@ -5,16 +5,18 @@ const localStorageKey = 'settings';
 
 @Injectable()
 export class UserService {
+
+  poolIntervalTime = 30000;
+  minerIntervalTime = 10000;
+  chartIntervalTime = 30000;
+
   settings = {
     isDarkTheme: false,
     selectedPoolApiUrl: null,
     selectedAddress: '',
     addresses: [],
     networkStats: null,
-    poolIntervalTime: 30000,
     poolStats: null,
-    minerIntervalTime: 10000,
-    chartIntervalTime: 30000,
     minerStats: null,
     minerWorkerStats: null,
     minerWorkerChartHashRate: null,
@@ -40,6 +42,7 @@ export class UserService {
     if (this.settings.addresses == null) {
       this.settings.addresses = [];
     }
+    //this.settings.minerWorkerStats = [];
   }
 
   save() {

@@ -8,6 +8,7 @@ import { PoolsComponent } from './pools/pools.component';
 import { PoolComponent } from './pool/pool.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AboutComponent } from './about/about.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'pools/:id/blocks', component: BlocksComponent },
   { path: 'pools/:id/payments', component: PaymentsComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'chat', component: ChatComponent },
   { path: 'help', component: AboutComponent },
 ];
 

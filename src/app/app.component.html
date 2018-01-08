@@ -54,6 +54,10 @@
                       <mat-icon>info</mat-icon>
                       About 
                     </button>
+                    <button mat-menu-item routerLink="/chat"> 
+                      <mat-icon>chat</mat-icon>
+                      Support 
+                    </button>
                     <button mat-menu-item routerLink="/help">
                       <mat-icon>help</mat-icon>
                       Help
@@ -61,33 +65,33 @@
                   </mat-menu>
     </mat-toolbar-row>
     <mat-toolbar-row fxShow="false" [fxShow.xs]="true">
-      <div *ngIf="userService.settings.networkStats" class="mat-caption">
-        Network:
-        <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
-      </div>
+        <div *ngIf="userService.settings.networkStats" class="mat-caption">
+          Network:
+          <b>{{userService.settings.networkStats.difficulty | difficultyToHashRate | abbreviatedNumber }}H/s</b>
+        </div>
+        &nbsp;
+        <div *ngIf="userService.settings.poolStats" class="mat-caption">
+          Pool:
+          <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
+        </div>
+        <!--
+        &nbsp;
+        <div *ngIf="userService.settings.pools" class="mat-caption">
+          Pools:
+          <b>{{userService.settings.pools.length | abbreviatedNumber }}</b>
+        </div>
+        &nbsp;
+        <div *ngIf="userService.settings.pools" class="mat-caption">
+          Miners:
+          <b>{{userService.getTotalMiners() | abbreviatedNumber }}</b>
+        </div>
+      -->
       &nbsp;
-      <div *ngIf="userService.settings.poolStats" class="mat-caption">
-        Pool:
-        <b>{{userService.settings.poolStats.hashRate | abbreviatedNumber }}H/s</b>
-      </div>
-      <!--
-      &nbsp;
-      <div *ngIf="userService.settings.pools" class="mat-caption">
-        Pools:
-        <b>{{userService.settings.pools.length | abbreviatedNumber }}</b>
-      </div>
-      &nbsp;
-      <div *ngIf="userService.settings.pools" class="mat-caption">
-        Miners:
-        <b>{{userService.getTotalMiners() | abbreviatedNumber }}</b>
-      </div>
-    -->
-    &nbsp;
-      <div *ngIf="userService.settings.minerStats" class="mat-caption">
-        You:
-        <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
-      </div>
-    </mat-toolbar-row>
+        <div *ngIf="userService.settings.minerStats" class="mat-caption">
+          You:
+          <b>{{userService.settings.minerStats.hash | abbreviatedNumber }}H/s</b>
+        </div>
+      </mat-toolbar-row>
   </mat-toolbar>
 
 
@@ -125,7 +129,7 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="app-main-content">
+          <div class="app-main-content">
         <!--<app-messages></app-messages>-->
         <router-outlet></router-outlet>
       </div>

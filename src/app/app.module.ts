@@ -55,6 +55,7 @@ import { PoolsAddDialogComponent } from './pools/pools-add-dialog/pools-add-dial
 import { SettingsComponent } from './settings/settings.component';
 import { PoolComponent } from './pool/pool.component';
 import { AboutComponent } from './about/about.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { AboutComponent } from './about/about.component';
     PoolsAddDialogComponent,
     SettingsComponent,
     PoolComponent,
-    AboutComponent
+    AboutComponent,
+    ChatComponent
   ],
   entryComponents: [
     PoolsAddDialogComponent

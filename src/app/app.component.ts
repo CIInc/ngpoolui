@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Observable } from 'rxjs/Observable';
-import { interval } from 'rxjs/observable/interval';
+import { timer } from 'rxjs/observable/timer';
 
 import { PoolApiService } from './services/pool-api.service';
 import { PoolStoreService } from './services/pool-store.service';
@@ -18,8 +18,6 @@ export class AppComponent {
   // Side menu options
   modeIndex = 2;
   get mode() { return ['side', 'over', 'push'][this.modeIndex]; }
-  
-  subcription1;
 
   mobileQuery: MediaQueryList;
 
@@ -47,15 +45,15 @@ export class AppComponent {
       console.warn(error.message);
     });
 
-    this.getMinerStats();
-    const interval1 = interval(this.userService.settings.minerIntervalTime);
-    this.subcription1 = interval1.subscribe(val => {
+    const interval1 = timer(1, this.userService.minerIntervalTime);
+    const subcription1 = interval1.subscribe(val => {
+      console.log('timer1');
       this.getMinerStats();
     });
 
-    this.getPoolStats();
-    const interval2 = interval(this.userService.settings.poolIntervalTime);
-    this.subcription1 = interval2.subscribe(val => {
+    const interval2 = timer(1, this.userService.poolIntervalTime);
+    const subcription2 = interval2.subscribe(val => {
+      console.log('timer2');
       this.getPoolStats();
     });
   }
@@ -74,7 +72,9 @@ export class AppComponent {
     });
   }
   getMinerStats() {
-    if (this.userService.settings.selectedPoolApiUrl == null || this.userService.settings.selectedAddress == null) {
+    if (this.userService.settings.selectedPoolApiUrl == null
+      || this.userService.settings.selectedAddress == null
+      || this.userService.settings.selectedAddress.length === 0) {
       return;
     }
     this.poolApiService.getMinerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress)
@@ -84,7 +84,14 @@ export class AppComponent {
     });
     this.poolApiService.getMinerWorkerStats(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress)
       .subscribe(results => {
-      this.userService.settings.minerWorkerStats = results;
+        const keys = Object.keys(results);
+        const workers = [];
+        keys.forEach(key => {
+          if (results[key].identifer !== 'global') {
+            workers.push(results[key]);
+          }
+        });
+        this.userService.settings.minerWorkerStats = workers;
       this.userService.save();
     });
   }

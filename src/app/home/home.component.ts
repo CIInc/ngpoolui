@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { resetFakeAsyncZone } from '@angular/core/testing';
 
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { interval } from 'rxjs/observable/interval';
+import { timer } from 'rxjs/observable/timer';
 
 import { PoolApiService } from '../services/pool-api.service';
 import { PoolStoreService } from '../services/pool-store.service';
@@ -18,10 +18,16 @@ import { Pool } from '../models/pool';
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   pools: Pool[] = [];
 
   myInterval;
   subcription1;
+
+  dataSource; // = new MatTableDataSource(this.pools);
+  displayedColumns = ['identifier', 'hash', 'totalHash', 'lts'];
 
   area_ChartData = [
     /*
@@ -46,11 +52,11 @@ export class HomeComponent implements OnInit {
     public userService: UserService,
     public snackBar: MatSnackBar,
   ) {
+    this.dataSource = new MatTableDataSource(this.userService.settings.minerWorkerStats);
 
-    this.getChartStats();
-
-    this.myInterval = interval(this.userService.settings.chartIntervalTime);
+    this.myInterval = timer(1, this.userService.chartIntervalTime);
     this.subcription1 = this.myInterval.subscribe(val => {
+      console.log('timerhome1');
       this.getChartStats();
     });
   }
@@ -58,8 +64,18 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
   getChartStats() {
     this.pools = this.userService.settings.pools;
+    if (this.userService.settings.selectedPoolApiUrl == null
+      || this.userService.settings.selectedAddress == null
+      || this.userService.settings.selectedAddress.length === 0) {
+      return;
+    }
     this.poolApiService.getMinerWorkerChartHashRate(this.userService.settings.selectedPoolApiUrl, this.userService.settings.selectedAddress).subscribe(results => {
       this.userService.settings.minerWorkerChartHashRate = results;
       this.userService.save();
@@ -74,7 +90,6 @@ export class HomeComponent implements OnInit {
       const legendArray = ['Date'];
       const datesDict = {};
       keys.forEach(key => {
-        //alert(key);
         legendArray.push(key);
         //alert(JSON.stringify(this.userService.settings.minerWorkerChartHashRate[key]));
         this.userService.settings.minerWorkerChartHashRate[key].forEach(element => {
@@ -88,9 +103,11 @@ export class HomeComponent implements OnInit {
           datesDict[dt.toString()].push(element.hs);
         });
       });
+      /*
       if (legendArray.length === 2 && legendArray[1] === 'global') {
         return;
       }
+      */
       this.area_ChartData.push(legendArray);
       Object.keys(datesDict).forEach(d => {
         if (datesDict[d].length === legendArray.length) {

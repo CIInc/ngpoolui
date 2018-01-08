@@ -24,7 +24,6 @@ export class PoolsComponent implements OnInit {
   searchResults: Pool[] = [];
 
   dataSource;// = new MatTableDataSource(this.pools);
-
   displayedColumns = ['name', 'hashRate', 'miners', 'totalHashes', 'totalBlocksFound', 'lastBlockFoundTime'];
 
   constructor(
@@ -40,7 +39,7 @@ export class PoolsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pools = this.pools.sort((a, b) => a.miners < b.miners ? 1 : 0);
+    //this.pools = this.pools.sort((a, b) => a.miners < b.miners ? 1 : 0);
   }
 
   updateStats() {

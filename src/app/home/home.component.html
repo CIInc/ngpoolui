@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  Home
+  Dashboard
 </mat-toolbar>
 <!--  
 <div fxShow="false" [fxShow.xs]="true">
@@ -13,8 +13,8 @@
   test
 </mat-card>
 -->
-<!-- fxLayoutWrap fxFlexFill fxLayout.xs="column" [style.marginTop.px]="10" [style.marginBottom.px]="10" -->
-<div class="flexcards" fxLayout="row" fxLayoutGap="10px" [style.marginTop.px]="10">
+<!-- fxLayoutWrap fxFlexFill fxLayout.xs="column" [style.marginTop.px]="10" -->
+<div class="flexcards" fxLayout="row" fxLayoutGap="10px" [style.marginTop.px]="10" [style.marginBottom.px]="10">
   <mat-card [style.marginLeft.px]="10">
     <mat-card-content>
       <mat-card-title-group>
@@ -72,7 +72,7 @@
     <mat-card-content>
       <mat-card-title-group>
         <mat-card-title *ngIf="userService.settings.minerWorkerStats">
-          {{(userService.settings.minerWorkerStats | keys).length-1}}
+          {{(userService.settings.minerWorkerStats | keys).length}}
         </mat-card-title>
         <mat-card-title *ngIf="!userService.settings.minerWorkerStats">-</mat-card-title>
         <mat-card-subtitle>Workers</mat-card-subtitle>
@@ -95,10 +95,53 @@
       </button>
     -->
 </div>
-<mat-card *ngIf="userService.settings.minerWorkerStats" [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10">
+<mat-card [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10">
   <mat-card-content>
-      <div appGoogleChart id="area_chart" [chartData]="area_ChartData" [chartOptions]= "area_ChartOptions" chartType="AreaChart" GoogleChart></div>
-      <!--  (itemSelect)="itemSelected($event)" (itemDeselect)="itemDeselected($event)" -->
+      <!--<div class="chart-container mat-elevation-z2">-->
+          <div appGoogleChart id="area_chart" [chartData]="area_ChartData" [chartOptions]= "area_ChartOptions" chartType="AreaChart"></div>
+          <!--  (itemSelect)="itemSelected($event)" (itemDeselect)="itemDeselected($event)" -->
+        <mat-table #table [dataSource]="dataSource" matSort>
+    
+          <!--
+          <ng-container matColumnDef="selected">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <mat-radio-button value="element.apiUrl" (change)="userService.settings.selectedPoolApiUrl = element.apiUrl" [checked]="userService.settings.selectedPoolApiUrl == element.apiUrl"></mat-radio-button>
+            </mat-cell>
+          </ng-container>
+        -->
+        
+          <ng-container matColumnDef="identifier">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Identifier </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.identifer || element.identifier}} </mat-cell>
+          </ng-container>
+    
+          <ng-container matColumnDef="hash">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Hash Rate </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.hash | abbreviatedNumber}}H/s </mat-cell>
+          </ng-container>
+    
+          <ng-container matColumnDef="totalHash">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Hashes </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.totalHash | abbreviatedNumber:'2'}} </mat-cell>
+          </ng-container>
+    
+          <ng-container matColumnDef="lts">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              <span matTooltip="{{element.lts * 1000 | date:'short' }}">
+                {{element.lts * 1000 | amTimeAgo }}
+              </span>
+            </mat-cell>
+          </ng-container>
+    
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <!-- [routerLink]="[row._id]" -->
+          <mat-row 
+            *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    <!--</div>-->
+    
   </mat-card-content>
 </mat-card>
 <mat-card [style.marginLeft.px]="10" [style.marginTop.px]="10" [style.marginRight.px]="10">
